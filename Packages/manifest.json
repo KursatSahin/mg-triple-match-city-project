@@ -5,11 +5,13 @@
       "url": "https://package.openupm.com",
       "scopes": [
         "jp.hadashikick.vcontainer",
-        "com.cysharp.unitask"
+        "com.cysharp.unitask",
+        "com.kyrylokuzyk.primetween"
       ]
     }
   ],
   "dependencies": {
+    "com.kyrylokuzyk.primetween": "1.3.3",
     "com.cysharp.unitask": "2.5.10",
     "com.unity.addressables": "2.7.6",
     "com.unity.collab-proxy": "2.10.0",
