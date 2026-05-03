@@ -11,9 +11,9 @@ namespace TripleMatch.Core
     /// </summary>
     public class GameBootstrapper : IStartable
     {
-        private readonly DataManager _dataManager;
+        private readonly IDataManager _dataManager;
 
-        public GameBootstrapper(DataManager dataManager)
+        public GameBootstrapper(IDataManager dataManager)
         {
             _dataManager = dataManager;
         }

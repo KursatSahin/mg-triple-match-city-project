@@ -7,7 +7,7 @@ namespace TripleMatch.Core
     {
         protected override void Configure(IContainerBuilder builder)
         {
-            builder.Register<DataManager>(Lifetime.Singleton);
+            builder.Register<DataManager>(Lifetime.Singleton).As<IDataManager>();
             builder.RegisterEntryPoint<GameBootstrapper>();
         }
     }
