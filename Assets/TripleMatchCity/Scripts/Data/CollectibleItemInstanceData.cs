@@ -4,13 +4,13 @@ using UnityEngine;
 namespace TripleMatch.Data
 {
     [Serializable]
-    public class CollectableItemInstanceData
+    public class CollectibleItemInstanceData
     {
-        public CollectableItemData Item;
+        public CollectibleItemData Item;
         public Vector2 Position;
         public Vector2 Scale = Vector2.one;
         public bool IsMirrored;
         public int SortingOrder;
-        public int CollectableParentIndex = -1;
+        public int CollectibleParentIndex = -1;
     }
 }

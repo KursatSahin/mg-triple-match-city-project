@@ -10,6 +10,6 @@ namespace TripleMatch.Data
         public float TimeLimitSeconds = 120f;
         public BackgroundData Background = new();
         public List<GoalData> Goals = new();
-        public List<CollectableItemInstanceData> Items = new();
+        public List<CollectibleItemInstanceData> Items = new();
     }
 }

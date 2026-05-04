@@ -7,9 +7,9 @@ namespace TripleMatch.Data
     [Serializable]
     public class GoalData
     {
-        public CollectableItemData Item;
-        
-        [Min(1)][ValidateInput("IsMultipleOf3", "Target Match Count must be at least 1.")] 
+        public CollectibleItemData Item;
+
+        [Min(1)][ValidateInput("IsMultipleOf3", "Target Match Count must be at least 1.")]
         public int TargetMatchCount;
 
         private bool IsMultipleOf3(int value)

@@ -4,12 +4,12 @@ namespace TripleMatch.Core
 {
     public struct ItemCollectedEvent : IEvent
     {
-        public CollectableItemData ItemData;
+        public CollectibleItemData ItemData;
     }
 
     public struct MatchCompletedEvent : IEvent
     {
-        public CollectableItemData ItemData;
+        public CollectibleItemData ItemData;
         public int Count;
     }
 
@@ -19,7 +19,7 @@ namespace TripleMatch.Core
 
     public struct GoalUpdatedEvent : IEvent
     {
-        public CollectableItemData ItemData;
+        public CollectibleItemData ItemData;
         public int Current;
     }
 }
