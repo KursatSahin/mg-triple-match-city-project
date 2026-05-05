@@ -1,4 +1,6 @@
 using System;
+using NaughtyAttributes;
+using TripleMatch.Core.Attributes;
 using UnityEngine;
 
 namespace TripleMatch.Data
@@ -8,9 +10,20 @@ namespace TripleMatch.Data
     {
         public CollectibleItemData Item;
         public Vector2 Position;
+
+        [ValidateField(nameof(ValidateScale))]
         public Vector2 Scale = Vector2.one;
-        public bool IsMirrored;
+        
+        [AllowNesting] [ReadOnly]
+        public bool IsMirrored = false;
         public int SortingOrder;
         public int CollectibleParentIndex = -1;
+
+        private Vector2 ValidateScale(Vector2 value)
+        {
+            IsMirrored = value.x < 0f ? true : false;
+            
+            return value;
+        }
     }
 }

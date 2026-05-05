@@ -27,10 +27,7 @@ namespace TripleMatch.Board
 
             var t = transform;
             t.localPosition = data.Position;
-            t.localScale = new Vector3(
-                data.IsMirrored ? -data.Scale.x : data.Scale.x,
-                data.Scale.y,
-                1f);
+            t.localScale = new Vector3(data.Scale.x, data.Scale.y, 1f);
 
             if (cachedSpriteRenderer != null)
                 cachedSpriteRenderer.sortingOrder = data.SortingOrder;
