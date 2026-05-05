@@ -18,5 +18,7 @@ MonoBehaviour:
     Sprite: {fileID: 0}
     Size: {x: 0, y: 0}
     Position: {x: 0, y: 0}
-  Goals: []
+  Goals:
+  - Item: {fileID: 11400000, guid: 54cf71cc538fd1d45aa4efc4c3867853, type: 2}
+    TargetMatchCount: 3
   Items: []

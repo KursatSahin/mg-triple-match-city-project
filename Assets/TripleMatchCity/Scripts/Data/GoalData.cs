@@ -1,7 +1,6 @@
 using System;
-using NaughtyAttributes;
+using TripleMatch.Core.Attributes;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace TripleMatch.Data
 {
@@ -9,13 +8,26 @@ namespace TripleMatch.Data
     public class GoalData
     {
         public CollectibleItemData Item;
-
-        [Min(1)][ValidateInput("IsNotMultipleOf3", "Target Match Count must be multiple of 3.")]
+        
+        [Tooltip("Target Match Count must be multiple of 3")]
+        [ValidateField(nameof(ValidateMultipleOf3))]
         public int TargetMatchCount;
 
-        private bool IsNotMultipleOf3(int value)
+        private int ValidateMultipleOf3(int value)
         {
-            return value % 3 != 0;
+            if (value < 3)
+            {
+                return 3;
+            }
+            else
+            {
+                if (value % 3 != 0)
+                {
+                    return value - (value % 3);
+                }
+                
+                return value;
+            }
         }
     }
 }
