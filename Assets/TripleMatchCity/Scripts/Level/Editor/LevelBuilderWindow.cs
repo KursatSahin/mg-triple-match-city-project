@@ -27,36 +27,35 @@ namespace TripleMatch.Level.Editor
         void OnGUI()
         {
             EditorGUILayout.HelpBox(
-                "Expected Level Root structure:\n" +
+                "Expected structure:\n" +
                 "  LevelRoot\n" +
-                "  ├── Background (SpriteRenderer)\n" +
-                "  ├── CollectibleItems/* (visual prefab instances)\n" +
-                "  └── NonCollectibleItems/* (visual prefab instances)\n\n" +
-                "Rule: an item type cannot appear in both groups in the same level.\n\n" +
-                "Update preserves: LevelIndex, TimeLimitSeconds, Goals.\n" +
-                "Update overwrites: Background, Items.",
+                "  |_ Background (SpriteRenderer)\n" +
+                "  |_ CollectibleItems/* (visual prefab instances)\n" +
+                "  |_ NonCollectibleItems/* (visual prefab instances)\n\n" +
+                "Rule: an item type cannot appear in both groups in the same level.\n",
                 MessageType.Info);
 
             EditorGUILayout.Space();
 
-            _levelRoot = (Transform)EditorGUILayout.ObjectField(
-                "Level Root", _levelRoot, typeof(Transform), true);
+            _levelRoot = (Transform)EditorGUILayout.ObjectField("Level Root", _levelRoot, typeof(Transform), true);
 
-            _targetLevelData = (LevelDataSO)EditorGUILayout.ObjectField(
-                "Target Level Data (optional)", _targetLevelData, typeof(LevelDataSO), false);
+            _targetLevelData = (LevelDataSO)EditorGUILayout.ObjectField("Target Level Data (optional)", _targetLevelData, typeof(LevelDataSO), false);
 
             EditorGUILayout.Space();
 
             using (new EditorGUI.DisabledScope(_levelRoot == null))
             {
                 if (GUILayout.Button("Build / Update", GUILayout.Height(28)))
+                {
                     BuildLevelData();
+                }
             }
         }
 
         void BuildLevelData()
         {
             var lookup = BuildVisualToItemDataLookup();
+            
             if (lookup.Count == 0)
             {
                 Debug.LogError("[Level Builder] No CollectibleItemData assets found in the project.");

@@ -5,11 +5,11 @@ namespace TripleMatch.Board
 {
     public class CollectibleItemView : MonoBehaviour
     {
-        GameObject visualInstance;
-        SpriteRenderer cachedSpriteRenderer;
-
-        CollectibleItemInstanceData instanceData;
-        CollectibleItemView parentItem;
+        [SerializeField] private CollectibleItemView parentItem;
+        
+        private GameObject visualInstance;
+        private SpriteRenderer cachedSpriteRenderer;
+        private CollectibleItemInstanceData instanceData;
 
         public CollectibleItemData ItemData => instanceData?.Item;
         public CollectibleItemInstanceData InstanceData => instanceData;
@@ -17,13 +17,37 @@ namespace TripleMatch.Board
         public int SortingOrder => cachedSpriteRenderer != null ? cachedSpriteRenderer.sortingOrder : 0;
         public bool IsRemovedFromBoard { get; private set; }
 
+        public void AttachVisual(GameObject visual)
+        {
+            visualInstance = visual;
+            if (visual == null)
+            {
+                cachedSpriteRenderer = null;
+                return;
+            }
+
+            var t = visual.transform;
+            t.SetParent(transform, worldPositionStays: false);
+            t.localPosition = Vector3.zero;
+            t.localRotation = Quaternion.identity;
+            t.localScale = Vector3.one;
+            cachedSpriteRenderer = visual.GetComponentInChildren<SpriteRenderer>();
+        }
+
+        public GameObject DetachVisual()
+        {
+            var v = visualInstance;
+            visualInstance = null;
+            cachedSpriteRenderer = null;
+            if (v != null) v.transform.SetParent(null, worldPositionStays: false);
+            return v;
+        }
+
         public void Initialize(CollectibleItemInstanceData data, CollectibleItemView parent)
         {
             instanceData = data;
             parentItem = parent;
             IsRemovedFromBoard = false;
-
-            EnsureVisualInstantiated(data.Item);
 
             var t = transform;
             t.localPosition = data.Position;
@@ -46,19 +70,6 @@ namespace TripleMatch.Board
             parentItem = null;
             IsRemovedFromBoard = false;
             gameObject.SetActive(false);
-        }
-
-        void EnsureVisualInstantiated(CollectibleItemData itemData)
-        {
-            if (visualInstance != null || itemData == null || itemData.VisualPrefab == null)
-                return;
-
-            visualInstance = Instantiate(itemData.VisualPrefab, transform);
-            var visualTransform = visualInstance.transform;
-            visualTransform.localPosition = Vector3.zero;
-            visualTransform.localRotation = Quaternion.identity;
-            visualTransform.localScale = Vector3.one;
-            cachedSpriteRenderer = visualInstance.GetComponentInChildren<SpriteRenderer>();
         }
     }
 }

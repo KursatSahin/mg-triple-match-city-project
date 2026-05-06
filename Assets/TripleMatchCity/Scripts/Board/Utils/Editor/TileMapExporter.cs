@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEditor;
 using UnityEngine.Tilemaps;
 using System.IO;
@@ -17,7 +17,7 @@ public class TilemapExporter : EditorWindow
         pixelsPerUnit = EditorGUILayout.IntField("Pixels Per Unit", pixelsPerUnit);
         outputPath    = EditorGUILayout.TextField("Output Path", outputPath);
         EditorGUILayout.HelpBox(
-            "Hierarchy'de Tilemap objelerini seçin, sonra butona basın.",
+            "Select Tilemap objects in the Hierarchy, then click the button.",
             MessageType.Info);
         if (GUILayout.Button("Export Selected Tilemaps to PNG"))
             ExportTilemaps();
@@ -26,7 +26,7 @@ public class TilemapExporter : EditorWindow
     void ExportTilemaps()
     {
         var selected = Selection.gameObjects;
-        if (selected.Length == 0) { Debug.LogError("Hiç obje seçili değil!"); return; }
+        if (selected.Length == 0) { Debug.LogError("No object is selected."); return; }
 
         Bounds combinedBounds = new Bounds();
         bool   first          = true;
@@ -38,7 +38,7 @@ public class TilemapExporter : EditorWindow
 
             tm.CompressBounds();
 
-            // CellToWorld ile gerçek world-space köşeleri al
+            // Use CellToWorld to read the real world-space corners.
             BoundsInt cells = tm.cellBounds;
             Vector3 worldMin = tm.CellToWorld(cells.min);
             Vector3 worldMax = tm.CellToWorld(cells.max);
@@ -54,11 +54,11 @@ public class TilemapExporter : EditorWindow
             else          combinedBounds.Encapsulate(worldBounds);
         }
 
-        if (first) { Debug.LogError("Seçili objeler arasında Tilemap bulunamadı!"); return; }
+        if (first) { Debug.LogError("No Tilemap was found in the selected objects."); return; }
 
         int width  = Mathf.RoundToInt(combinedBounds.size.x * pixelsPerUnit);
         int height = Mathf.RoundToInt(combinedBounds.size.y * pixelsPerUnit);
-        Debug.Log($"Bounds: {combinedBounds} | Boyut: {width}x{height}px");
+        Debug.Log($"Bounds: {combinedBounds} | Size: {width}x{height}px");
 
         var rt = new RenderTexture(width, height, 24, RenderTextureFormat.ARGB32);
 
@@ -92,6 +92,6 @@ public class TilemapExporter : EditorWindow
         DestroyImmediate(tex);
 
         AssetDatabase.Refresh();
-        Debug.Log($"✓ Export tamamlandı → {outputPath} ({width}x{height}px)");
+        Debug.Log($"Export done → {outputPath} ({width}x{height}px)");
     }
 }
