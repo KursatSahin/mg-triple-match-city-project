@@ -12,16 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 903f1229c65fe7a4497d9b7e7900ad8a, type: 3}
   m_Name: Level_001
   m_EditorClassIdentifier: 
-  LevelIndex: 0
+  LevelIndex: 1
   TimeLimitSeconds: 120
   Background:
     Sprite: {fileID: 4585537247781460299, guid: f2b5ede5e729f514cab8c5846aebd097, type: 3}
     Size: {x: 4.16, y: 8.16}
     Position: {x: 0, y: 0}
   Goals:
-  - Item: {fileID: 11400000, guid: 54cf71cc538fd1d45aa4efc4c3867853, type: 2}
+  - Item: {fileID: 11400000, guid: e24ee080ff6fa99469a65395c5e8c924, type: 2}
     TargetMatchCount: 3
-  Items:
+  - Item: {fileID: 11400000, guid: 158c6907888fa034884a3d9d4a1f690f, type: 2}
+    TargetMatchCount: 3
+  - Item: {fileID: 11400000, guid: bcc578c9e41ab4045a886c9956e77fdc, type: 2}
+    TargetMatchCount: 3
+  CollectibleItems:
   - Item: {fileID: 11400000, guid: beec5e39474b42449aa2370705be2954, type: 2}
     Position: {x: -1.343, y: -1.799}
     Scale: {x: 0.2, y: 0.2}
@@ -169,6 +173,7 @@ MonoBehaviour:
     SortingOrder: 0
     CollectibleParentIndex: -1
     IsCollectible: 1
+  NonCollectibleItems:
   - Item: {fileID: 11400000, guid: 57ad5e02e99c27847b0a4cbfb4950da0, type: 2}
     Position: {x: 0.45, y: -1.37}
     Scale: {x: 0.2, y: 0.2}

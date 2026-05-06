@@ -18,7 +18,7 @@ namespace TripleMatch.Level.Editor
         Transform _levelRoot;
         LevelDataSO _targetLevelData;
 
-        [MenuItem("TripleMatch/Level Builder")]
+        [MenuItem("TripleMatch/Level/Level Builder")]
         static void Open()
         {
             GetWindow<LevelBuilderWindow>("Level Builder");
@@ -76,17 +76,18 @@ namespace TripleMatch.Level.Editor
 
             var background = ExtractBackground(_levelRoot.Find(BackgroundChildName));
 
-            var items = new List<CollectibleItemInstanceData>();
+            var collectibleItems = new List<CollectibleItemInstanceData>();
+            var nonCollectibleItems = new List<CollectibleItemInstanceData>();
             var indexByTransform = new Dictionary<Transform, int>();
             int skipped = 0;
 
             if (collectibleGroup != null)
-                WalkChildren(collectibleGroup, isCollectible: true, lookup, items, indexByTransform, ref skipped);
+                WalkChildren(collectibleGroup, isCollectible: true, lookup, collectibleItems, indexByTransform, ref skipped);
 
             if (nonCollectibleGroup != null)
-                WalkChildren(nonCollectibleGroup, isCollectible: false, lookup, items, indexByTransform, ref skipped);
+                WalkChildren(nonCollectibleGroup, isCollectible: false, lookup, nonCollectibleItems, indexByTransform, ref skipped);
 
-            if (!ValidateNoCrossGroupTypes(items, out var error))
+            if (!ValidateNoCrossGroupTypes(collectibleItems, nonCollectibleItems, out var error))
             {
                 Debug.LogError($"[Level Builder] Validation failed:\n{error}");
                 EditorUtility.DisplayDialog("Level Builder — Validation Failed", error, "OK");
@@ -97,7 +98,8 @@ namespace TripleMatch.Level.Editor
 
             Undo.RecordObject(target, "Build Level Data");
             target.Background = background;
-            target.Items = items;
+            target.CollectibleItems = collectibleItems;
+            target.NonCollectibleItems = nonCollectibleItems;
 
             EditorUtility.SetDirty(target);
             AssetDatabase.SaveAssets();
@@ -105,33 +107,26 @@ namespace TripleMatch.Level.Editor
 
             if (_targetLevelData == null) _targetLevelData = target;
 
-            int collectibleCount = items.Count(i => i.IsCollectible);
-            int nonCollectibleCount = items.Count - collectibleCount;
-
             Debug.Log(
                 $"[Level Builder] Built '{target.name}': " +
-                $"{collectibleCount} collectible, {nonCollectibleCount} non-collectible, " +
+                $"{collectibleItems.Count} collectible, {nonCollectibleItems.Count} non-collectible, " +
                 $"{skipped} skipped. " +
                 $"Background sprite: {(background.Sprite != null ? background.Sprite.name : "<none>")}.");
 
             EditorGUIUtility.PingObject(target);
         }
 
-        static bool ValidateNoCrossGroupTypes(List<CollectibleItemInstanceData> items, out string error)
+        static bool ValidateNoCrossGroupTypes(
+            List<CollectibleItemInstanceData> collectibleItems,
+            List<CollectibleItemInstanceData> nonCollectibleItems,
+            out string error)
         {
-            var typeToFlags = new Dictionary<CollectibleItemData, HashSet<bool>>();
-            foreach (var item in items)
-            {
-                if (item.Item == null) continue;
-                if (!typeToFlags.TryGetValue(item.Item, out var flags))
-                {
-                    flags = new HashSet<bool>();
-                    typeToFlags[item.Item] = flags;
-                }
-                flags.Add(item.IsCollectible);
-            }
+            var collectibleTypes = new HashSet<CollectibleItemData>(
+                collectibleItems.Where(i => i.Item != null).Select(i => i.Item));
+            var nonCollectibleTypes = new HashSet<CollectibleItemData>(
+                nonCollectibleItems.Where(i => i.Item != null).Select(i => i.Item));
 
-            var conflicts = typeToFlags.Where(kvp => kvp.Value.Count > 1).ToList();
+            var conflicts = collectibleTypes.Intersect(nonCollectibleTypes).ToList();
             if (conflicts.Count == 0)
             {
                 error = null;
@@ -140,8 +135,8 @@ namespace TripleMatch.Level.Editor
 
             var sb = new StringBuilder();
             sb.AppendLine("The following item type(s) appear in both groups:");
-            foreach (var kvp in conflicts)
-                sb.AppendLine($"  • {kvp.Key.name}");
+            foreach (var type in conflicts)
+                sb.AppendLine($"  • {type.name}");
             sb.AppendLine();
             sb.AppendLine("Move all instances of each type into a single group, then rebuild.");
             error = sb.ToString();
