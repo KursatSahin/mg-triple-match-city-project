@@ -8,7 +8,7 @@ public class TilemapExporter : EditorWindow
     private int    pixelsPerUnit = 32;
     private string outputPath   = "Assets/ExportedMap.png";
 
-    [MenuItem("Tools/Tilemap Exporter")]
+    [MenuItem("TripleMatch/Utils/Tilemap Exporter")]
     public static void ShowWindow() => GetWindow<TilemapExporter>("Tilemap Exporter");
 
     void OnGUI()
