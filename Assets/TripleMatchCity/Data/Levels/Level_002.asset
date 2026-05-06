@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 903f1229c65fe7a4497d9b7e7900ad8a, type: 3}
-  m_Name: New Level Data SO
+  m_Name: Level_002
   m_EditorClassIdentifier: 
   LevelIndex: 0
   TimeLimitSeconds: 120
@@ -21,4 +21,10 @@ MonoBehaviour:
   Goals:
   - Item: {fileID: 11400000, guid: 54cf71cc538fd1d45aa4efc4c3867853, type: 2}
     TargetMatchCount: 3
-  Items: []
+  Items:
+  - Item: {fileID: 11400000, guid: 631170699c01bd6429ac7e874c160962, type: 2}
+    Position: {x: 0, y: 0}
+    Scale: {x: 1, y: 1}
+    IsMirrored: 0
+    SortingOrder: 0
+    CollectibleParentIndex: 0
