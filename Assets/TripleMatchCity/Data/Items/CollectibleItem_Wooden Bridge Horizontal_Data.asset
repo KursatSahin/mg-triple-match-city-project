@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ce3cf5a17ec346940901bdec514e501f, type: 3}
-  m_Name: New Collectible Item Data
+  m_Name: CollectibleItem_Wooden Bridge Horizontal_Data
   m_EditorClassIdentifier: 
-  DisplayName: 
-  VisualPrefab: {fileID: 0}
+  DisplayName: CollectibleItem_Wooden Bridge Horizontal_Data
+  VisualPrefab: {fileID: 2006872807799156548, guid: 087fb849f6444744587f159e70d408a1, type: 3}

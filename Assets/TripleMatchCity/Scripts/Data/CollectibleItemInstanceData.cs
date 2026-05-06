@@ -18,6 +18,7 @@ namespace TripleMatch.Data
         public bool IsMirrored = false;
         public int SortingOrder;
         public int CollectibleParentIndex = -1;
+        public bool IsCollectible = true;
 
         private Vector2 ValidateScale(Vector2 value)
         {
