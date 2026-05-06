@@ -1,4 +1,4 @@
-using Cysharp.Threading.Tasks;
+ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using VContainer.Unity;
@@ -33,8 +33,8 @@ namespace TripleMatch.Core
             QualitySettings.vSyncCount = 0;
 
             await _dataManager.LoadData();
-
-            await SceneManager.LoadSceneAsync("MainMenu", LoadSceneMode.Additive).ToUniTask();
+            
+            await SceneManager.LoadSceneAsync("Game", LoadSceneMode.Additive).ToUniTask();
 
             await SceneManager.UnloadSceneAsync("Bootstrap").ToUniTask();
         }

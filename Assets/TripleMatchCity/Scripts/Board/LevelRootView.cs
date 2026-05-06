@@ -3,9 +3,8 @@ using UnityEngine;
 namespace TripleMatch.Board
 {
     /// <summary>
-    /// Sits on the LevelRoot scaffold prefab. Holds direct references to the structural
-    /// children that BoardManager populates at runtime: the background SpriteRenderer
-    /// and the two item containers (collectible / non-collectible).
+    /// Simple level root view component.
+    /// Provides references to the background and the parent transforms for collectible and non-collectible items.
     /// </summary>
     public class LevelRootView : MonoBehaviour
     {

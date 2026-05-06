@@ -32,7 +32,7 @@ namespace TripleMatch.Core
             }
         }
 
-        static void Clear()
+        public static void Clear()
         {
             bindings.Clear();
         }
