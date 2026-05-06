@@ -10,8 +10,7 @@ namespace TripleMatch.Core.Attributes.Editor
     [CustomPropertyDrawer(typeof(ValidateFieldAttribute))]
     public class ValidateFieldDrawer : PropertyDrawer
     {
-        const BindingFlags MemberFlags =
-            BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
+        const BindingFlags MemberFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
@@ -22,6 +21,7 @@ namespace TripleMatch.Core.Attributes.Editor
         {
             EditorGUI.BeginChangeCheck();
             EditorGUI.PropertyField(position, property, label, true);
+            
             if (!EditorGUI.EndChangeCheck()) return;
 
             var attr = (ValidateFieldAttribute)attribute;
@@ -29,6 +29,7 @@ namespace TripleMatch.Core.Attributes.Editor
             property.serializedObject.ApplyModifiedProperties();
 
             var owner = ResolveOwner(property);
+            
             if (owner == null)
             {
                 Debug.LogError($"[ValidateField] Could not resolve owner for '{property.propertyPath}'.");
@@ -36,6 +37,7 @@ namespace TripleMatch.Core.Attributes.Editor
             }
 
             var field = owner.GetType().GetField(property.name, MemberFlags);
+            
             if (field == null)
             {
                 Debug.LogError($"[ValidateField] Field '{property.name}' not found on '{owner.GetType().Name}'.");
@@ -43,6 +45,7 @@ namespace TripleMatch.Core.Attributes.Editor
             }
 
             var callback = owner.GetType().GetMethod(attr.CallbackName, MemberFlags);
+            
             if (callback == null)
             {
                 Debug.LogError($"[ValidateField] Callback '{attr.CallbackName}' not found on '{owner.GetType().Name}'.");
@@ -50,25 +53,26 @@ namespace TripleMatch.Core.Attributes.Editor
             }
 
             var parameters = callback.GetParameters();
+            
             if (parameters.Length != 1 || parameters[0].ParameterType != field.FieldType)
             {
-                Debug.LogError(
-                    $"[ValidateField] Callback '{attr.CallbackName}' must accept a single parameter of type '{field.FieldType.Name}'.");
+                Debug.LogError($"[ValidateField] Callback '{attr.CallbackName}' must accept a single parameter of type '{field.FieldType.Name}'.");
                 return;
             }
 
             if (callback.ReturnType != field.FieldType)
             {
-                Debug.LogError(
-                    $"[ValidateField] Callback '{attr.CallbackName}' must return '{field.FieldType.Name}'.");
+                Debug.LogError($"[ValidateField] Callback '{attr.CallbackName}' must return '{field.FieldType.Name}'.");
                 return;
             }
 
             var unityTarget = property.serializedObject.targetObject;
+            
             Undo.RecordObject(unityTarget, "Validate Field");
 
             var currentValue = field.GetValue(owner);
             var result = callback.Invoke(owner, new[] { currentValue });
+            
             field.SetValue(owner, result);
 
             EditorUtility.SetDirty(unityTarget);
@@ -78,6 +82,7 @@ namespace TripleMatch.Core.Attributes.Editor
         static object ResolveOwner(SerializedProperty property)
         {
             object current = property.serializedObject.targetObject;
+            
             var path = property.propertyPath.Replace(".Array.data[", "[");
             var elements = path.Split('.');
 
@@ -85,11 +90,11 @@ namespace TripleMatch.Core.Attributes.Editor
             {
                 var element = elements[i];
                 int bracketIndex = element.IndexOf('[');
+                
                 if (bracketIndex >= 0)
                 {
                     var name = element.Substring(0, bracketIndex);
-                    var index = int.Parse(
-                        element.Substring(bracketIndex + 1, element.Length - bracketIndex - 2));
+                    var index = int.Parse(element.Substring(bracketIndex + 1, element.Length - bracketIndex - 2));
                     current = GetIndexedValue(current, name, index);
                 }
                 else
@@ -106,19 +111,28 @@ namespace TripleMatch.Core.Attributes.Editor
         static object GetMemberValue(object source, string name)
         {
             if (source == null) return null;
+            
             var type = source.GetType();
             var field = type.GetField(name, MemberFlags);
+            
             if (field != null) return field.GetValue(source);
+            
             var prop = type.GetProperty(name, MemberFlags);
+            
             return prop?.GetValue(source);
         }
 
         static object GetIndexedValue(object source, string name, int index)
         {
             if (GetMemberValue(source, name) is not IEnumerable enumerable) return null;
+            
             var enumerator = enumerable.GetEnumerator();
+            
             for (int i = 0; i <= index; i++)
+            {
                 if (!enumerator.MoveNext()) return null;
+            }
+            
             return enumerator.Current;
         }
     }
