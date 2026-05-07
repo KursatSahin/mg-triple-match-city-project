@@ -13,8 +13,6 @@ MonoBehaviour:
   m_Name: DeckConfig
   m_EditorClassIdentifier: 
   SlotCount: 7
-  SlotSize: 0.5
-  InsertDuration: 1
-  ShiftDuration: 1
-  MatchClearDuration: 1
-  CompactDuration: 1
+  SlotSize: 0.35
+  MoveStepValue: 6
+  MatchClearDuration: 0.3

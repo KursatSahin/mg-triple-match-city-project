@@ -16,6 +16,9 @@ namespace TripleMatch.Core
     public struct DeckFullEvent : IEvent { }
     public struct GoalCompletedEvent : IEvent { }
     public struct TimerExpiredEvent : IEvent { }
+    public struct GameWonEvent : IEvent { }
+    public struct GameFailedEvent : IEvent { }
+    public struct MainMenuRequestedEvent : IEvent { }
 
     public struct GoalUpdatedEvent : IEvent
     {

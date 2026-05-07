@@ -1,5 +1,6 @@
 using TripleMatch.Command;
 using TripleMatch.Deck;
+using TripleMatch.StateMachine;
 using UnityEngine;
 using VContainer;
 
@@ -7,6 +8,7 @@ namespace TripleMatch.Board
 {
     /// <summary>
     /// Tracks tap input on the board. Each accepted tap is wrapped in a CollectItemCommand and dispatched immediately.
+    /// Taps are ignored while the game state machine is not in Playing.
     /// </summary>
     public class InputHandler : MonoBehaviour
     {
@@ -15,13 +17,19 @@ namespace TripleMatch.Board
         private IBoardManager _boardManager;
         private IDeckManager _deckManager;
         private ICommandQueue _commandQueue;
+        private IGameStateMachine _gameStateMachine;
 
         [Inject]
-        public void Construct(IBoardManager boardManager, IDeckManager deckManager, ICommandQueue commandQueue)
+        public void Construct(
+            IBoardManager boardManager,
+            IDeckManager deckManager,
+            ICommandQueue commandQueue,
+            IGameStateMachine gameStateMachine)
         {
             _boardManager = boardManager;
             _deckManager = deckManager;
             _commandQueue = commandQueue;
+            _gameStateMachine = gameStateMachine;
         }
 
         private void Awake()
@@ -32,6 +40,7 @@ namespace TripleMatch.Board
         private void Update()
         {
             if (worldCamera == null) return;
+            if (_gameStateMachine != null && !_gameStateMachine.IsPlaying) return;
             if (!Input.GetMouseButtonDown(0)) return;
 
             Vector3 screenPos = Input.mousePosition;
