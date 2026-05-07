@@ -55,6 +55,42 @@ namespace TripleMatch.Board
             await UniTask.Yield();
         }
 
+        public void RemoveItem(CollectibleItemView view)
+        {
+            if (view == null) return;
+
+            int index = _activeItems.IndexOf(view);
+            
+            if (index < 0) return;
+
+            DetachLiveChildren(view);
+            
+            view.MarkRemovedFromBoard();
+
+            _activeItems.RemoveAt(index);
+            _itemFactory.Despawn(view);
+        }
+
+        private void DetachLiveChildren(CollectibleItemView view)
+        {
+            // Detach (re-parent) child collectible item from its parent
+            Transform reparentTo = view.transform.parent;
+            Transform t = view.transform;
+
+            for (int i = t.childCount - 1; i >= 0; i--)
+            {
+                Transform child = t.GetChild(i);
+                CollectibleItemView childView = child.GetComponent<CollectibleItemView>();
+                
+                if (childView == null) continue;
+                
+                if (childView.IsRemovedFromBoard) continue;
+
+                child.SetParent(reparentTo, worldPositionStays: true);
+                childView.ClearParent();
+            }
+        }
+
         public void ClearBoard()
         {
             for (int i = _activeItems.Count - 1; i >= 0; i--)
@@ -67,6 +103,7 @@ namespace TripleMatch.Board
             if (_levelRootInstance != null)
             {
                 Object.Destroy(_levelRootInstance.gameObject);
+                
                 _levelRootInstance = null;
             }
         }
