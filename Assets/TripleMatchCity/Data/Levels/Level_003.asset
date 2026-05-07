@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Level_003
   m_EditorClassIdentifier: 
   LevelIndex: 2
-  TimeLimitSeconds: 120
+  TimeLimitSeconds: 99
   Background:
     Sprite: {fileID: 4585537247781460299, guid: f2b5ede5e729f514cab8c5846aebd097, type: 3}
     Size: {x: 4.16, y: 8.16}
@@ -43,7 +43,7 @@ MonoBehaviour:
     CollectibleParentIndex: 0
     IsCollectible: 1
   - Item: {fileID: 11400000, guid: beec5e39474b42449aa2370705be2954, type: 2}
-    Position: {x: 0.048, y: 1.455}
+    Position: {x: 1.529, y: 1.93}
     Scale: {x: 0.2, y: 0.2}
     IsMirrored: 0
     SortingOrder: 2
@@ -57,7 +57,7 @@ MonoBehaviour:
     CollectibleParentIndex: 2
     IsCollectible: 1
   - Item: {fileID: 11400000, guid: beec5e39474b42449aa2370705be2954, type: 2}
-    Position: {x: 1.784, y: 0.795}
+    Position: {x: -0.165, y: 2.856}
     Scale: {x: 0.2, y: 0.2}
     IsMirrored: 0
     SortingOrder: 2
@@ -78,7 +78,7 @@ MonoBehaviour:
     CollectibleParentIndex: -1
     IsCollectible: 1
   - Item: {fileID: 11400000, guid: bcc578c9e41ab4045a886c9956e77fdc, type: 2}
-    Position: {x: 0.83, y: -2.689}
+    Position: {x: -0.6490001, y: -2.0649998}
     Scale: {x: 0.2, y: 0.2}
     IsMirrored: 0
     SortingOrder: 0
@@ -99,7 +99,7 @@ MonoBehaviour:
     CollectibleParentIndex: -1
     IsCollectible: 1
   - Item: {fileID: 11400000, guid: 6e4f11a5f429cce4d950c5167492589c, type: 2}
-    Position: {x: -1.342, y: -3.191}
+    Position: {x: -0.732, y: 1.819}
     Scale: {x: 0.2, y: 0.2}
     IsMirrored: 0
     SortingOrder: 0
@@ -141,7 +141,7 @@ MonoBehaviour:
     CollectibleParentIndex: -1
     IsCollectible: 1
   - Item: {fileID: 11400000, guid: 158c6907888fa034884a3d9d4a1f690f, type: 2}
-    Position: {x: -1.384, y: 3.149}
+    Position: {x: -1.188, y: 2.688}
     Scale: {x: 0.2, y: 0.2}
     IsMirrored: 0
     SortingOrder: 0
@@ -180,104 +180,104 @@ MonoBehaviour:
     Position: {x: 0.45, y: -1.37}
     Scale: {x: 0.2, y: 0.2}
     IsMirrored: 0
-    SortingOrder: 0
+    SortingOrder: 11
     CollectibleParentIndex: -1
     IsCollectible: 0
   - Item: {fileID: 11400000, guid: 9e07f0723324be047abfb8081f277693, type: 2}
     Position: {x: 0.926, y: -1.065}
     Scale: {x: 0.2, y: 0.2}
     IsMirrored: 0
-    SortingOrder: 0
+    SortingOrder: 10
     CollectibleParentIndex: -1
     IsCollectible: 0
   - Item: {fileID: 11400000, guid: 9e07f0723324be047abfb8081f277693, type: 2}
     Position: {x: 0, y: -0.553}
     Scale: {x: 0.2, y: 0.2}
     IsMirrored: 0
-    SortingOrder: 0
+    SortingOrder: 10
     CollectibleParentIndex: -1
     IsCollectible: 0
   - Item: {fileID: 11400000, guid: 1721a5a444bc1a54293416e6907e4fc8, type: 2}
     Position: {x: 1.336, y: -2.01}
     Scale: {x: 0.2, y: 0.2}
     IsMirrored: 0
-    SortingOrder: 0
+    SortingOrder: 10
     CollectibleParentIndex: -1
     IsCollectible: 0
   - Item: {fileID: 11400000, guid: 60f406aca095dd14da9204cbf5e638c6, type: 2}
     Position: {x: 0.195, y: 0.437}
     Scale: {x: 0.2, y: 0.2}
     IsMirrored: 0
-    SortingOrder: 0
+    SortingOrder: 10
     CollectibleParentIndex: -1
     IsCollectible: 0
   - Item: {fileID: 11400000, guid: 60f406aca095dd14da9204cbf5e638c6, type: 2}
     Position: {x: 1.052, y: -1.78}
     Scale: {x: 0.2, y: 0.2}
     IsMirrored: 0
-    SortingOrder: 0
+    SortingOrder: 10
     CollectibleParentIndex: -1
     IsCollectible: 0
   - Item: {fileID: 11400000, guid: d695ba00b5a4ec24ab0936b03421b9a3, type: 2}
     Position: {x: -1.634, y: 1.404}
     Scale: {x: 0.2, y: 0.2}
     IsMirrored: 0
-    SortingOrder: 0
+    SortingOrder: 11
     CollectibleParentIndex: -1
     IsCollectible: 0
   - Item: {fileID: 11400000, guid: d695ba00b5a4ec24ab0936b03421b9a3, type: 2}
     Position: {x: -1.83, y: 1.336}
     Scale: {x: 0.2, y: 0.2}
     IsMirrored: 0
-    SortingOrder: 0
+    SortingOrder: 12
     CollectibleParentIndex: -1
     IsCollectible: 0
   - Item: {fileID: 11400000, guid: c05a839119a1af14e9b11ff0fa91bfd5, type: 2}
     Position: {x: -0.95, y: 0.17}
     Scale: {x: 0.2, y: 0.2}
     IsMirrored: 0
-    SortingOrder: 0
+    SortingOrder: 10
     CollectibleParentIndex: -1
     IsCollectible: 0
   - Item: {fileID: 11400000, guid: c05a839119a1af14e9b11ff0fa91bfd5, type: 2}
     Position: {x: 0.02, y: 2.68}
     Scale: {x: 0.2, y: 0.2}
     IsMirrored: 0
-    SortingOrder: 0
+    SortingOrder: 10
     CollectibleParentIndex: -1
     IsCollectible: 0
   - Item: {fileID: 11400000, guid: c05a839119a1af14e9b11ff0fa91bfd5, type: 2}
-    Position: {x: 0.6, y: -3.03}
+    Position: {x: -0.879, y: -2.406}
     Scale: {x: 0.2, y: 0.2}
     IsMirrored: 0
-    SortingOrder: 0
+    SortingOrder: 10
     CollectibleParentIndex: -1
     IsCollectible: 0
   - Item: {fileID: 11400000, guid: 36af302f8bcbf4f4eaaac042dffba453, type: 2}
     Position: {x: 1.19, y: 1.97}
     Scale: {x: 0.2, y: 0.2}
     IsMirrored: 0
-    SortingOrder: 0
+    SortingOrder: 10
     CollectibleParentIndex: -1
     IsCollectible: 0
   - Item: {fileID: 11400000, guid: 2ac302803871c964fb3b6ceb363679d6, type: 2}
     Position: {x: -0.32, y: 1.69}
     Scale: {x: 0.2, y: 0.2}
     IsMirrored: 0
-    SortingOrder: 0
+    SortingOrder: 10
     CollectibleParentIndex: -1
     IsCollectible: 0
   - Item: {fileID: 11400000, guid: 261bbd178cbdf2c4098d8a2006a64016, type: 2}
     Position: {x: -1.43, y: 1.79}
     Scale: {x: 0.2, y: 0.2}
     IsMirrored: 0
-    SortingOrder: 0
+    SortingOrder: 10
     CollectibleParentIndex: -1
     IsCollectible: 0
   - Item: {fileID: 11400000, guid: 261bbd178cbdf2c4098d8a2006a64016, type: 2}
     Position: {x: 1.06, y: 0.7}
     Scale: {x: 0.2, y: 0.2}
     IsMirrored: 0
-    SortingOrder: 2
+    SortingOrder: 10
     CollectibleParentIndex: -1
     IsCollectible: 0
