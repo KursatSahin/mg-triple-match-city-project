@@ -1,12 +1,19 @@
-using System;
+using Cysharp.Threading.Tasks;
 using PrimeTween;
 using TMPro;
+using TripleMatch.Core;
 using UnityEngine;
 using UnityEngine.UI;
+using VContainer;
 
 namespace TripleMatch.UI
 {
-    public class EndGamePopupView : MonoBehaviour
+    /// <summary>
+    /// End-of-game popup screen. Activated by IUIService.Open via OnOpenAsync, deactivated via
+    /// OnCloseAsync. The return-home button raises MainMenuRequestedEvent on the injected event
+    /// bus; SceneFlowService handles the scene transition.
+    /// </summary>
+    public class EndGamePopupView : MonoBehaviour, IScreen<EndGameScreenArgs>
     {
         [Header("Root & Title")]
         [SerializeField] private GameObject root;
@@ -25,88 +32,65 @@ namespace TripleMatch.UI
         [Header("Button")]
         [SerializeField] private Button returnHomeButton;
 
-        private Action _onReturnHome;
+        private IEventBus _eventBus;
+
+        public bool BlockInput => true;
+
+        [Inject]
+        public void Construct(IEventBus eventBus)
+        {
+            _eventBus = eventBus;
+        }
 
         private void Awake()
         {
-            if (root != null)
-            {
-                root.SetActive(false);
-            }
-            
-            if (fadeBackground != null)
-            {
-                fadeBackground.SetActive(false);
-            }
-            
-            if (returnHomeButton != null)
-            {
-                returnHomeButton.onClick.AddListener(HandleReturnHomeClicked);
-            }
-            
+            if (root != null) root.SetActive(false);
+            if (fadeBackground != null) fadeBackground.SetActive(false);
+            if (returnHomeButton != null) returnHomeButton.onClick.AddListener(HandleReturnHomeClicked);
+
             ResetStars();
         }
 
         private void OnDestroy()
         {
-            if (returnHomeButton != null)
-            {
-                returnHomeButton.onClick.RemoveListener(HandleReturnHomeClicked);
-            }
+            if (returnHomeButton != null) returnHomeButton.onClick.RemoveListener(HandleReturnHomeClicked);
         }
 
-        public void Show(string titleText, int starCount, Action onReturnHome)
+        public UniTask OnOpenAsync(EndGameScreenArgs args)
         {
-            _onReturnHome = onReturnHome;
+            if (args == null) return UniTask.CompletedTask;
 
-            if (popupTitleText != null)
-            {
-                popupTitleText.text = titleText;
-            }
-            
-            if (fadeBackground != null)
-            {
-                fadeBackground.SetActive(true);
-            }
-            
-            if (root != null)
-            {
-                root.SetActive(true);
-            }
+            if (popupTitleText != null) popupTitleText.text = args.Title;
+            if (fadeBackground != null) fadeBackground.SetActive(true);
+            if (root != null) root.SetActive(true);
 
-            AnimateStars(starCount);
+            AnimateStars(args.StarCount);
+
+            return UniTask.CompletedTask;
         }
 
-        public void Hide()
+        public UniTask OnCloseAsync()
         {
-            if (root != null)
-            {
-                root.SetActive(false);
-            }
-            
-            if (fadeBackground != null)
-            {
-                fadeBackground.SetActive(false);
-            }
+            if (root != null) root.SetActive(false);
+            if (fadeBackground != null) fadeBackground.SetActive(false);
+
+            return UniTask.CompletedTask;
         }
 
         private void ResetStars()
         {
             if (starFills == null) return;
-            
+
             for (int i = 0; i < starFills.Length; i++)
             {
-                if (starFills[i] != null)
-                {
-                    starFills[i].localScale = Vector3.zero;
-                }
+                if (starFills[i] != null) starFills[i].localScale = Vector3.zero;
             }
         }
 
         private void AnimateStars(int count)
         {
             ResetStars();
-            
+
             if (starFills == null || starFills.Length == 0) return;
 
             int reveal = Mathf.Clamp(count, 0, starFills.Length);
@@ -114,7 +98,6 @@ namespace TripleMatch.UI
             for (int i = 0; i < reveal; i++)
             {
                 Transform target = starFills[i];
-                
                 if (target == null) continue;
 
                 float delay = i * starStaggerDelay;
@@ -128,9 +111,7 @@ namespace TripleMatch.UI
 
         private void HandleReturnHomeClicked()
         {
-            var cb = _onReturnHome;
-            _onReturnHome = null;
-            cb?.Invoke();
+            _eventBus?.Raise(new MainMenuRequestedEvent());
         }
     }
 }

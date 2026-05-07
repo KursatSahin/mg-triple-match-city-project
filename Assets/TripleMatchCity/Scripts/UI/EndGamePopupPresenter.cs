@@ -1,4 +1,5 @@
 using System;
+using Cysharp.Threading.Tasks;
 using TripleMatch.Core;
 using TripleMatch.Level;
 using UnityEngine;
@@ -7,6 +8,8 @@ using VContainer.Unity;
 namespace TripleMatch.UI
 {
     /// <summary>
+    /// Listens for GameWonEvent / GameFailedEvent, 
+    /// Computes star count from remaining time,
     /// failed = 0
     /// won, remaining time [0,20) = 1
     /// won, remaining time [20, 60) = 2
@@ -17,20 +20,24 @@ namespace TripleMatch.UI
         private const string DoneText = "Done";
         private const string FailedText = "Failed";
 
-        private readonly EndGamePopupView _view;
         private readonly ITimerManager _timerManager;
         private readonly ILevelManager _levelManager;
         private readonly IEventBus _eventBus;
+        private readonly IUIService _uiService;
 
         private EventBinding<GameWonEvent> _wonBinding;
         private EventBinding<GameFailedEvent> _failedBinding;
 
-        public EndGamePopupPresenter(EndGamePopupView view, ITimerManager timerManager, ILevelManager levelManager, IEventBus eventBus)
+        public EndGamePopupPresenter(
+            ITimerManager timerManager,
+            ILevelManager levelManager,
+            IEventBus eventBus,
+            IUIService uiService)
         {
-            _view = view;
             _timerManager = timerManager;
             _levelManager = levelManager;
             _eventBus = eventBus;
+            _uiService = uiService;
         }
 
         public void Start()
@@ -59,12 +66,14 @@ namespace TripleMatch.UI
 
         private void Show(bool isWon)
         {
-            if (_view == null) return;
-
             string title = isWon ? DoneText : FailedText;
             int stars = CalculateStars(isWon);
 
-            _view.Show(title, stars, OnReturnHomeRequested);
+            _uiService.Open<EndGamePopupView, EndGameScreenArgs>(new EndGameScreenArgs
+            {
+                Title = title,
+                StarCount = stars
+            }).Forget();
         }
 
         private int CalculateStars(bool isWon)
@@ -73,7 +82,7 @@ namespace TripleMatch.UI
 
             var level = _levelManager?.CurrentLevel;
             float limit = level != null ? level.TimeLimitSeconds : 0f;
-            
+
             if (limit <= 0f) return 3;
 
             float remaining = _timerManager != null ? _timerManager.TimeRemaining : 0f;
@@ -81,13 +90,8 @@ namespace TripleMatch.UI
 
             if (fraction < 0.2f) return 1;
             if (fraction < 0.6f) return 2;
-            
-            return 3;
-        }
 
-        private void OnReturnHomeRequested()
-        {
-            _eventBus.Raise(new MainMenuRequestedEvent());
+            return 3;
         }
     }
 }

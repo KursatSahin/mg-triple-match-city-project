@@ -45,6 +45,8 @@ public class GameSceneLifetimeScope : LifetimeScope
 
         builder.Register<GameStateMachine>(Lifetime.Singleton).AsImplementedInterfaces();
 
+        builder.Register<UIService>(Lifetime.Singleton).As<IUIService>();
+
         builder.RegisterComponent(endGamePopupView);
         builder.Register<EndGamePopupPresenter>(Lifetime.Singleton).AsImplementedInterfaces();
 

@@ -4212,14 +4212,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1826384316874889401, guid: f8753cd7a7131784ca92a78cd1dc54c6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3152593578119721766, guid: f8753cd7a7131784ca92a78cd1dc54c6, type: 3}
       propertyPath: m_Name
       value: EndGamePopup
       objectReference: {fileID: 0}
     - target: {fileID: 3152593578119721766, guid: f8753cd7a7131784ca92a78cd1dc54c6, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3839083785381480440, guid: f8753cd7a7131784ca92a78cd1dc54c6, type: 3}
+      propertyPath: root
+      value: 
+      objectReference: {fileID: 2872094696768149735}
     - target: {fileID: 3839083785381480440, guid: f8753cd7a7131784ca92a78cd1dc54c6, type: 3}
       propertyPath: fadeBackground
       value: 
@@ -4240,6 +4248,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fcc936326fcfb24bbcd57aaf1c227f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &2872094696768149735 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1826384316874889401, guid: f8753cd7a7131784ca92a78cd1dc54c6, type: 3}
+  m_PrefabInstance: {fileID: 2872094696768149733}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &3469421871280815745 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 249415503930842031, guid: f8753cd7a7131784ca92a78cd1dc54c6, type: 3}
