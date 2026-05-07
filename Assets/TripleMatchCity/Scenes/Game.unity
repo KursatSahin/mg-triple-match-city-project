@@ -2302,6 +2302,7 @@ MonoBehaviour:
   sceneParent: {fileID: 1089482803}
   inputHandler: {fileID: 1442088705}
   deckView: {fileID: 6636680490571199071}
+  deckConfig: {fileID: 11400000, guid: 2fee330fbb4c692478c28a5a39ae4486, type: 2}
 --- !u!1001 &1661691104
 PrefabInstance:
   m_ObjectHideFlags: 0

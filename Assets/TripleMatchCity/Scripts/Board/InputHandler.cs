@@ -1,3 +1,4 @@
+using TripleMatch.Command;
 using TripleMatch.Deck;
 using UnityEngine;
 using VContainer;
@@ -5,8 +6,7 @@ using VContainer;
 namespace TripleMatch.Board
 {
     /// <summary>
-    /// Tracks tap input on the board and forwards the picked item to the deck.
-    /// Uses Physics2D.OverlapPoint with item polygon colliders.
+    /// Tracks tap input on the board. Each accepted tap is wrapped in a CollectItemCommand and dispatched immediately.
     /// </summary>
     public class InputHandler : MonoBehaviour
     {
@@ -14,13 +14,14 @@ namespace TripleMatch.Board
 
         private IBoardManager _boardManager;
         private IDeckManager _deckManager;
-        private bool _isProcessing;
+        private ICommandQueue _commandQueue;
 
         [Inject]
-        public void Construct(IBoardManager boardManager, IDeckManager deckManager)
+        public void Construct(IBoardManager boardManager, IDeckManager deckManager, ICommandQueue commandQueue)
         {
             _boardManager = boardManager;
             _deckManager = deckManager;
+            _commandQueue = commandQueue;
         }
 
         private void Awake()
@@ -30,10 +31,7 @@ namespace TripleMatch.Board
 
         private void Update()
         {
-            if (_isProcessing) return;
-            
             if (worldCamera == null) return;
-            
             if (!Input.GetMouseButtonDown(0)) return;
 
             Vector3 screenPos = Input.mousePosition;
@@ -44,17 +42,7 @@ namespace TripleMatch.Board
             if (picked == null) return;
             if (_deckManager.IsFull) return;
 
-            _isProcessing = true;
-
-            try
-            {
-                _boardManager.DetachItem(picked);
-                _deckManager.TryInsert(picked);
-            }
-            finally
-            {
-                _isProcessing = false;
-            }
+            _commandQueue.Enqueue(new CollectItemCommand(_boardManager, _deckManager, picked));
         }
 
         /// <summary>

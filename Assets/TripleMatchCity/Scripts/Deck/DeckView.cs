@@ -16,7 +16,7 @@ namespace TripleMatch.Deck
         public IReadOnlyList<Transform> Slots => slots;
         public int SlotCount => slots != null ? slots.Count : 0;
 
-        public Transform GetSlotAnchor(int index)
+        public Transform GetSlotPos(int index)
         {
             if (slots == null) return null;
             if (index < 0 || index >= slots.Count) return null;
