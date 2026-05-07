@@ -22,6 +22,8 @@ public class RootLifetimeScope : LifetimeScope
     protected override void Configure(IContainerBuilder builder)
     {
         // Persistent services. Live for the whole app session.
+        builder.Register<EventBus>(Lifetime.Singleton).As<IEventBus>();
+
         builder.Register<DataManager>(Lifetime.Singleton).As<IDataManager>();
 
         builder.Register<LevelManager>(Lifetime.Singleton)

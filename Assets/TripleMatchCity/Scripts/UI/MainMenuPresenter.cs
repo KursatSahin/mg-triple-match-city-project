@@ -21,11 +21,13 @@ namespace TripleMatch.UI
 
         private readonly MainMenuView _view;
         private readonly ILevelManager _levelManager;
+        private readonly IEventBus _eventBus;
 
-        public MainMenuPresenter(MainMenuView view, ILevelManager levelManager)
+        public MainMenuPresenter(MainMenuView view, ILevelManager levelManager, IEventBus eventBus)
         {
             _view = view;
             _levelManager = levelManager;
+            _eventBus = eventBus;
         }
 
         public void Start()
@@ -66,7 +68,7 @@ namespace TripleMatch.UI
 
         private void OnPlayClicked()
         {
-            EventBus<GameSceneRequestedEvent>.Raise(new GameSceneRequestedEvent());
+            _eventBus.Raise(new GameSceneRequestedEvent());
         }
 
         private void OnClearClicked()

@@ -13,13 +13,15 @@ namespace TripleMatch.UI
     {
         private readonly IGoalManager _goalManager;
         private readonly GoalPanelView _view;
+        private readonly IEventBus _eventBus;
 
         private EventBinding<GoalUpdatedEvent> _goalUpdatedBinding;
 
-        public GoalPanelPresenter(IGoalManager goalManager, GoalPanelView view)
+        public GoalPanelPresenter(IGoalManager goalManager, GoalPanelView view, IEventBus eventBus)
         {
             _goalManager = goalManager;
             _view = view;
+            _eventBus = eventBus;
         }
 
         public void Start()
@@ -29,14 +31,14 @@ namespace TripleMatch.UI
             _view.Build(_goalManager.Goals);
 
             _goalUpdatedBinding = new EventBinding<GoalUpdatedEvent>(OnGoalUpdated);
-            EventBus<GoalUpdatedEvent>.Register(_goalUpdatedBinding);
+            _eventBus.Subscribe(_goalUpdatedBinding);
         }
 
         public void Dispose()
         {
             if (_goalUpdatedBinding != null)
             {
-                EventBus<GoalUpdatedEvent>.Deregister(_goalUpdatedBinding);
+                _eventBus.Unsubscribe(_goalUpdatedBinding);
                 _goalUpdatedBinding = null;
             }
         }

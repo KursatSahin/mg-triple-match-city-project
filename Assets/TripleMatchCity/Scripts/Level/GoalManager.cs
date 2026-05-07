@@ -14,6 +14,7 @@ namespace TripleMatch.Level
     public class GoalManager : IGoalManager, IStartable, IDisposable
     {
         private readonly ILevelManager _levelManager;
+        private readonly IEventBus _eventBus;
         private readonly List<LevelGoalEntity> _goals = new();
 
         private EventBinding<MatchCompletedEvent> _matchBinding;
@@ -22,9 +23,10 @@ namespace TripleMatch.Level
         public IReadOnlyList<LevelGoalEntity> Goals => _goals;
         public bool AreAllGoalsComplete => CheckAllComplete();
 
-        public GoalManager(ILevelManager levelManager)
+        public GoalManager(ILevelManager levelManager, IEventBus eventBus)
         {
             _levelManager = levelManager;
+            _eventBus = eventBus;
         }
 
         public void Start()
@@ -32,14 +34,14 @@ namespace TripleMatch.Level
             BuildGoalsFromCurrentLevel();
 
             _matchBinding = new EventBinding<MatchCompletedEvent>(OnMatchCompleted);
-            EventBus<MatchCompletedEvent>.Register(_matchBinding);
+            _eventBus.Subscribe(_matchBinding);
         }
 
         public void Dispose()
         {
             if (_matchBinding != null)
             {
-                EventBus<MatchCompletedEvent>.Deregister(_matchBinding);
+                _eventBus.Unsubscribe(_matchBinding);
                 _matchBinding = null;
             }
         }
@@ -73,7 +75,7 @@ namespace TripleMatch.Level
 
                 goal.Decrement(matchCompletedEvent.Count);
 
-                EventBus<GoalUpdatedEvent>.Raise(new GoalUpdatedEvent
+                _eventBus.Raise(new GoalUpdatedEvent
                 {
                     ItemData = goal.Item,
                     Current = goal.Remaining
@@ -83,7 +85,7 @@ namespace TripleMatch.Level
             if (!_completionRaised && CheckAllComplete())
             {
                 _completionRaised = true;
-                EventBus<GoalCompletedEvent>.Raise(new GoalCompletedEvent());
+                _eventBus.Raise(new GoalCompletedEvent());
             }
         }
 

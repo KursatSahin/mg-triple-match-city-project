@@ -18,29 +18,36 @@ namespace TripleMatch.Runtime
         public const string MainMenuSceneName = "MainMenu";
         public const string GameSceneName = "Game";
 
+        private readonly IEventBus _eventBus;
+
         private EventBinding<MainMenuRequestedEvent> _mainMenuBinding;
         private EventBinding<GameSceneRequestedEvent> _gameSceneBinding;
         private bool _isTransitioning;
 
+        public SceneFlowService(IEventBus eventBus)
+        {
+            _eventBus = eventBus;
+        }
+
         public void Start()
         {
             _mainMenuBinding = new EventBinding<MainMenuRequestedEvent>(_ => GoToScene(MainMenuSceneName).Forget());
-            EventBus<MainMenuRequestedEvent>.Register(_mainMenuBinding);
+            _eventBus.Subscribe(_mainMenuBinding);
 
             _gameSceneBinding = new EventBinding<GameSceneRequestedEvent>(_ => GoToScene(GameSceneName).Forget());
-            EventBus<GameSceneRequestedEvent>.Register(_gameSceneBinding);
+            _eventBus.Subscribe(_gameSceneBinding);
         }
 
         public void Dispose()
         {
             if (_mainMenuBinding != null)
             {
-                EventBus<MainMenuRequestedEvent>.Deregister(_mainMenuBinding);
+                _eventBus.Unsubscribe(_mainMenuBinding);
                 _mainMenuBinding = null;
             }
             if (_gameSceneBinding != null)
             {
-                EventBus<GameSceneRequestedEvent>.Deregister(_gameSceneBinding);
+                _eventBus.Unsubscribe(_gameSceneBinding);
                 _gameSceneBinding = null;
             }
         }

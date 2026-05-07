@@ -20,37 +20,39 @@ namespace TripleMatch.UI
         private readonly EndGamePopupView _view;
         private readonly ITimerManager _timerManager;
         private readonly ILevelManager _levelManager;
+        private readonly IEventBus _eventBus;
 
         private EventBinding<GameWonEvent> _wonBinding;
         private EventBinding<GameFailedEvent> _failedBinding;
 
-        public EndGamePopupPresenter(EndGamePopupView view, ITimerManager timerManager, ILevelManager levelManager)
+        public EndGamePopupPresenter(EndGamePopupView view, ITimerManager timerManager, ILevelManager levelManager, IEventBus eventBus)
         {
             _view = view;
             _timerManager = timerManager;
             _levelManager = levelManager;
+            _eventBus = eventBus;
         }
 
         public void Start()
         {
             _wonBinding = new EventBinding<GameWonEvent>(_ => Show(true));
-            EventBus<GameWonEvent>.Register(_wonBinding);
+            _eventBus.Subscribe(_wonBinding);
 
             _failedBinding = new EventBinding<GameFailedEvent>(_ => Show(false));
-            EventBus<GameFailedEvent>.Register(_failedBinding);
+            _eventBus.Subscribe(_failedBinding);
         }
 
         public void Dispose()
         {
             if (_wonBinding != null)
             {
-                EventBus<GameWonEvent>.Deregister(_wonBinding);
+                _eventBus.Unsubscribe(_wonBinding);
                 _wonBinding = null;
             }
-            
+
             if (_failedBinding != null)
             {
-                EventBus<GameFailedEvent>.Deregister(_failedBinding);
+                _eventBus.Unsubscribe(_failedBinding);
                 _failedBinding = null;
             }
         }
@@ -83,9 +85,9 @@ namespace TripleMatch.UI
             return 3;
         }
 
-        private static void OnReturnHomeRequested()
+        private void OnReturnHomeRequested()
         {
-            EventBus<MainMenuRequestedEvent>.Raise(new MainMenuRequestedEvent());
+            _eventBus.Raise(new MainMenuRequestedEvent());
         }
     }
 }

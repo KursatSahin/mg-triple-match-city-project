@@ -11,6 +11,7 @@ namespace TripleMatch.Level
     public class TimerManager : ITimerManager, IStartable, ITickable, IDisposable
     {
         private readonly ILevelManager _levelManager;
+        private readonly IEventBus _eventBus;
 
         private float _timeRemaining;
         private bool _isPaused;
@@ -22,9 +23,10 @@ namespace TripleMatch.Level
 
         public event Action<float> OnTimeChanged;
 
-        public TimerManager(ILevelManager levelManager)
+        public TimerManager(ILevelManager levelManager, IEventBus eventBus)
         {
             _levelManager = levelManager;
+            _eventBus = eventBus;
         }
 
         public void Start()
@@ -81,9 +83,9 @@ namespace TripleMatch.Level
             OnTimeChanged = null;
         }
 
-        private static void RaiseExpired()
+        private void RaiseExpired()
         {
-            EventBus<TimerExpiredEvent>.Raise(new TimerExpiredEvent());
+            _eventBus.Raise(new TimerExpiredEvent());
         }
     }
 }

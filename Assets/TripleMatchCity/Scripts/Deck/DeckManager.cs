@@ -19,17 +19,19 @@ namespace TripleMatch.Deck
         private readonly DeckView _deckView;
         private readonly IItemFactory _itemFactory;
         private readonly DeckConfigSO _deckConfig;
+        private readonly IEventBus _eventBus;
         private readonly List<DeckSlotData> _slots;
 
         public IReadOnlyList<DeckSlotData> Slots => _slots;
         public int SlotCount => _slots.Count;
         public bool IsFull => CountFilled() >= _slots.Count;
 
-        public DeckManager(DeckView deckView, IItemFactory itemFactory, DeckConfigSO deckConfig)
+        public DeckManager(DeckView deckView, IItemFactory itemFactory, DeckConfigSO deckConfig, IEventBus eventBus)
         {
             _deckView = deckView;
             _itemFactory = itemFactory;
             _deckConfig = deckConfig;
+            _eventBus = eventBus;
 
             int count = deckView != null ? deckView.SlotCount : 0;
 
@@ -148,7 +150,7 @@ namespace TripleMatch.Deck
             // Notify gameplay listeners that a matched items were removed.
             if (cleared.Count > 0 && cleared[0].ItemData != null)
             {
-                EventBus<MatchCompletedEvent>.Raise(new MatchCompletedEvent
+                _eventBus.Raise(new MatchCompletedEvent
                 {
                     ItemData = cleared[0].ItemData,
                     Count = cleared.Count
