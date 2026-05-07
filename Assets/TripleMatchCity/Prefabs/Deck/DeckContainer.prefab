@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5370069166576999032}
   - component: {fileID: 6083376795752239236}
+  - component: {fileID: 3005429568337030454}
   m_Layer: 0
   m_Name: DeckContainer
   m_TagString: Untagged
@@ -94,6 +95,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &3005429568337030454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5252104253066729448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbc212ada0952254e8514a7ed13a42bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  container: {fileID: 5370069166576999032}
+  slots:
+  - {fileID: 8642616722366086868}
+  - {fileID: 4351782261475851397}
+  - {fileID: 1131058943294645402}
+  - {fileID: 8115132836592546043}
+  - {fileID: 4610468653602092055}
+  - {fileID: 4845060123240492300}
+  - {fileID: 2202219802436759500}
 --- !u!1001 &1701528786568891043
 PrefabInstance:
   m_ObjectHideFlags: 0
