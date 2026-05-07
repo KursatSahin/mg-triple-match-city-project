@@ -14,9 +14,11 @@ namespace TripleMatch.Level.Editor
         const string BackgroundChildName = "Background";
         const string CollectibleGroupName = "CollectibleItems";
         const string NonCollectibleGroupName = "NonCollectibleItems";
+        const string DefaultSortingLayer = "Default";
 
         Transform _levelRoot;
         LevelDataSO _targetLevelData;
+        LevelDataSO _loadSource;
 
         [MenuItem("TripleMatch/Level/Level Builder")]
         static void Open()
@@ -39,9 +41,10 @@ namespace TripleMatch.Level.Editor
 
             _levelRoot = (Transform)EditorGUILayout.ObjectField("Level Root", _levelRoot, typeof(Transform), true);
 
-            _targetLevelData = (LevelDataSO)EditorGUILayout.ObjectField("Target Level Data (optional)", _targetLevelData, typeof(LevelDataSO), false);
-
             EditorGUILayout.Space();
+            EditorGUILayout.LabelField("Build / Save", EditorStyles.boldLabel);
+
+            _targetLevelData = (LevelDataSO)EditorGUILayout.ObjectField("Target Level Data (optional)", _targetLevelData, typeof(LevelDataSO), false);
 
             using (new EditorGUI.DisabledScope(_levelRoot == null))
             {
@@ -50,12 +53,25 @@ namespace TripleMatch.Level.Editor
                     BuildLevelData();
                 }
             }
+
+            EditorGUILayout.Space();
+            EditorGUILayout.LabelField("Load From Asset", EditorStyles.boldLabel);
+
+            _loadSource = (LevelDataSO)EditorGUILayout.ObjectField("Source Level Data", _loadSource, typeof(LevelDataSO), false);
+
+            using (new EditorGUI.DisabledScope(_levelRoot == null || _loadSource == null))
+            {
+                if (GUILayout.Button("Load Into Level Root", GUILayout.Height(28)))
+                {
+                    LoadLevelData();
+                }
+            }
         }
 
         void BuildLevelData()
         {
             var lookup = BuildVisualToItemDataLookup();
-            
+
             if (lookup.Count == 0)
             {
                 Debug.LogError("[Level Builder] No CollectibleItemData assets found in the project.");
@@ -113,6 +129,45 @@ namespace TripleMatch.Level.Editor
                 $"Background sprite: {(background.Sprite != null ? background.Sprite.name : "<none>")}.");
 
             EditorGUIUtility.PingObject(target);
+        }
+
+        void LoadLevelData()
+        {
+            string sourceName = _loadSource.name;
+            string rootName = _levelRoot.name;
+
+            bool confirmed = EditorUtility.DisplayDialog(
+                "Load Level",
+                $"Load '{sourceName}' into '{rootName}'?\n\n" +
+                $"All existing children under '{CollectibleGroupName}' and '{NonCollectibleGroupName}' will be removed. " +
+                "Background will be overwritten.",
+                "Load", "Cancel");
+            if (!confirmed) return;
+
+            Undo.IncrementCurrentGroup();
+            int undoGroup = Undo.GetCurrentGroup();
+            Undo.SetCurrentGroupName($"Load Level '{sourceName}'");
+
+            Transform collectibleGroup = EnsureChildGroup(_levelRoot, CollectibleGroupName);
+            Transform nonCollectibleGroup = EnsureChildGroup(_levelRoot, NonCollectibleGroupName);
+            Transform backgroundChild = EnsureChildGroup(_levelRoot, BackgroundChildName);
+
+            DestroyChildren(collectibleGroup);
+            DestroyChildren(nonCollectibleGroup);
+
+            ApplyBackgroundToScene(backgroundChild, _loadSource.Background);
+
+            int spawnedCollectible = SpawnItemsIntoScene(_loadSource.CollectibleItems, collectibleGroup);
+            int spawnedNonCollectible = SpawnItemsIntoScene(_loadSource.NonCollectibleItems, nonCollectibleGroup);
+
+            Undo.CollapseUndoOperations(undoGroup);
+
+            // Move the target slot to point at the source so a follow-up Build / Update overwrites it.
+            _targetLevelData = _loadSource;
+
+            Debug.Log(
+                $"[Level Builder] Loaded '{sourceName}' into '{rootName}': " +
+                $"{spawnedCollectible} collectible, {spawnedNonCollectible} non-collectible.");
         }
 
         static bool ValidateNoCrossGroupTypes(
@@ -216,9 +271,11 @@ namespace TripleMatch.Level.Editor
                 {
                     Item = itemData,
                     Position = child.localPosition,
+                    Rotation = child.localEulerAngles,
                     Scale = new Vector2(localScale.x, localScale.y),
                     IsMirrored = localScale.x < 0f,
                     SortingOrder = sr != null ? sr.sortingOrder : 0,
+                    SortingLayerName = sr != null && !string.IsNullOrEmpty(sr.sortingLayerName) ? sr.sortingLayerName : DefaultSortingLayer,
                     CollectibleParentIndex = parentIndex,
                     IsCollectible = isCollectible
                 };
@@ -229,6 +286,101 @@ namespace TripleMatch.Level.Editor
 
                 WalkChildren(child, isCollectible, lookup, items, indexByTransform, ref skipped);
             }
+        }
+
+        static Transform EnsureChildGroup(Transform parent, string name)
+        {
+            var existing = parent.Find(name);
+            if (existing != null) return existing;
+
+            var go = new GameObject(name);
+            Undo.RegisterCreatedObjectUndo(go, "Create Group");
+            go.transform.SetParent(parent, worldPositionStays: false);
+            return go.transform;
+        }
+
+        static void DestroyChildren(Transform group)
+        {
+            for (int i = group.childCount - 1; i >= 0; i--)
+            {
+                var child = group.GetChild(i);
+                Undo.DestroyObjectImmediate(child.gameObject);
+            }
+        }
+
+        static void ApplyBackgroundToScene(Transform backgroundChild, BackgroundData background)
+        {
+            var sr = backgroundChild.GetComponent<SpriteRenderer>();
+            if (sr == null)
+            {
+                sr = Undo.AddComponent<SpriteRenderer>(backgroundChild.gameObject);
+            }
+
+            Undo.RecordObject(sr, "Apply Background");
+            Undo.RecordObject(backgroundChild, "Apply Background Position");
+
+            if (background != null)
+            {
+                sr.drawMode = SpriteDrawMode.Sliced;
+                sr.sprite = background.Sprite;
+                if (background.Size != Vector2.zero) sr.size = background.Size;
+                backgroundChild.localPosition = background.Position;
+            }
+        }
+
+        static int SpawnItemsIntoScene(List<CollectibleItemInstanceData> items, Transform group)
+        {
+            if (items == null) return 0;
+
+            var spawnedTransforms = new List<Transform>(items.Count);
+            int spawned = 0;
+
+            for (int i = 0; i < items.Count; i++)
+            {
+                var data = items[i];
+                if (data == null || data.Item == null || data.Item.VisualPrefab == null)
+                {
+                    spawnedTransforms.Add(null);
+                    continue;
+                }
+
+                var visual = (GameObject)PrefabUtility.InstantiatePrefab(data.Item.VisualPrefab);
+                if (visual == null)
+                {
+                    spawnedTransforms.Add(null);
+                    continue;
+                }
+                Undo.RegisterCreatedObjectUndo(visual, "Spawn Item");
+
+                Transform parent = group;
+                if (data.CollectibleParentIndex >= 0
+                    && data.CollectibleParentIndex < spawnedTransforms.Count
+                    && spawnedTransforms[data.CollectibleParentIndex] != null)
+                {
+                    parent = spawnedTransforms[data.CollectibleParentIndex];
+                }
+
+                var t = visual.transform;
+                t.SetParent(parent, worldPositionStays: false);
+                t.localPosition = data.Position;
+                t.localEulerAngles = data.Rotation;
+                t.localScale = new Vector3(data.Scale.x, data.Scale.y, 1f);
+
+                var sr = visual.GetComponentInChildren<SpriteRenderer>();
+                if (sr != null)
+                {
+                    Undo.RecordObject(sr, "Apply Sorting");
+                    sr.sortingOrder = data.SortingOrder;
+                    sr.sortingLayerName = !string.IsNullOrEmpty(data.SortingLayerName)
+                        ? data.SortingLayerName
+                        : DefaultSortingLayer;
+                }
+
+                spawnedTransforms.Add(t);
+                spawned++;
+            }
+
+            return spawned;
         }
 
         static LevelDataSO CreateNewLevelDataAsset()

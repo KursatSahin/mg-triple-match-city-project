@@ -10,13 +10,15 @@ namespace TripleMatch.Data
     {
         public CollectibleItemData Item;
         public Vector2 Position;
+        public Vector3 Rotation = Vector3.zero;
 
         [ValidateField(nameof(ValidateScale))]
         public Vector2 Scale = Vector2.one;
-        
+
         [AllowNesting] [ReadOnly]
         public bool IsMirrored = false;
         public int SortingOrder;
+        public string SortingLayerName = "Default";
         public int CollectibleParentIndex = -1;
         public bool IsCollectible = true;
 
