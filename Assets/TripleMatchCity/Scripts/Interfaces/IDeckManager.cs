@@ -8,6 +8,9 @@ namespace TripleMatch.Deck
         IReadOnlyList<DeckSlotData> Slots { get; }
         int SlotCount { get; }
         bool IsFull { get; }
-        bool TryInsert(CollectibleItemView item);
+        InsertItemData InsertData(CollectibleItemView itemView);
+        MatchItemData ResolveMatchData();
+        void AnimateInsert(InsertItemData insertItemData);
+        void AnimateMatch(MatchItemData matchItemData);
     }
 }

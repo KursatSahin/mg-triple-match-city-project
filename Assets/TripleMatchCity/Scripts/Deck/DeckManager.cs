@@ -17,88 +17,299 @@ namespace TripleMatch.Deck
     public class DeckManager : IDeckManager
     {
         private const int MatchTreshold = 3;
+        private const string DeckFrontSortingLayer = "DeckFront";
 
-        private readonly DeckView _view;
+        private readonly DeckView _deckView;
         private readonly IItemFactory _itemFactory;
+        private readonly DeckConfigSO _deckConfig;
         private readonly List<DeckSlotData> _slots;
 
         public IReadOnlyList<DeckSlotData> Slots => _slots;
         public int SlotCount => _slots.Count;
         public bool IsFull => CountFilled() >= _slots.Count;
 
-        public DeckManager(DeckView view, IItemFactory itemFactory)
+        public DeckManager(DeckView deckView, IItemFactory itemFactory, DeckConfigSO deckConfig)
         {
-            _view = view;
+            _deckView = deckView;
             _itemFactory = itemFactory;
-            
-            int count = view != null ? view.SlotCount : 0;
-            
+            _deckConfig = deckConfig;
+
+            int count = deckView != null ? deckView.SlotCount : 0;
+
             _slots = new List<DeckSlotData>(count);
-            
-            for (int i = 0; i < count; i++)
+
+            for (int index = 0; index < count; index++)
             {
                 _slots.Add(new DeckSlotData());
             }
         }
 
-        public bool TryInsert(CollectibleItemView item)
+        public InsertItemData InsertData(CollectibleItemView itemView)
         {
-            if (item == null) return false;
-            
-            if (_view == null || _slots.Count == 0)
+            if (itemView == null) return InsertItemData.Empty;
+
+            if (_deckView == null || _slots.Count == 0)
             {
                 Debug.LogError("[DeckManager] Deck view is missing or has no slots.");
-                return false;
+                return InsertItemData.Empty;
             }
-            
+
             if (IsFull)
             {
                 Debug.LogWarning("[DeckManager] Deck is full, cannot insert.");
-                return false;
+                return InsertItemData.Empty;
             }
 
-            CollectibleItemData type = item.ItemData;
+            int targetIndex = FindInsertIndex(itemView.ItemData);
             
-            int targetIndex = FindInsertIndex(type);
-            
-            if (targetIndex < 0) return false;
+            if (targetIndex < 0) return InsertItemData.Empty;
 
-            ShiftRight(targetIndex);
+            var shiftRightMoves = new List<ShiftItemData>();
             
-            PlaceInSlot(item, targetIndex);
+            int firstEmpty = -1;
+            
+            for (int index = targetIndex; index < _slots.Count; index++)
+            {
+                if (_slots[index].IsEmpty)
+                {
+                    firstEmpty = index; break;
+                }
+            }
+            
+            if (firstEmpty >= 0)
+            {
+                for (int index = firstEmpty; index > targetIndex; index--)
+                {
+                    var moved = _slots[index - 1].Item;
+                    
+                    _slots[index].Item = moved;
+                    _slots[index - 1].Item = null;
+                    
+                    if (moved != null)
+                    {
+                        shiftRightMoves.Add(new ShiftItemData(moved, index));
+                    }
+                }
+            }
 
-            FindMatches();
-            
-            return true;
+            _slots[targetIndex].Item = itemView;
+
+            return new InsertItemData
+            {
+                IsValid = true,
+                ItemView = itemView,
+                TargetSlotIndex = targetIndex,
+                ShiftRightMoves = shiftRightMoves
+            };
         }
 
-        private void FindMatches()
+        public MatchItemData ResolveMatchData()
         {
-            int matchStartingIndex = FindMatchIndex();
-            if (matchStartingIndex < 0) return;
+            int matchStart = FindMatchIndex();
+            if (matchStart < 0) return MatchItemData.Empty;
 
-            ClearMatch(matchStartingIndex);
+            var cleared = new List<CollectibleItemView>(MatchTreshold);
             
-            //ShiftLeft();
-            OptimizedShiftLeft();
+            for (int index = 0; index < MatchTreshold; index++)
+            {
+                var slot = _slots[matchStart + index];
+                
+                if (slot.Item != null)
+                {
+                    cleared.Add(slot.Item);
+                }
+                
+                slot.Item = null;
+            }
+
+            // collapse remaining filled slots to the left
+            var shiftLeftMoves = new List<ShiftItemData>();
+            int emptyCount = 0;
+            
+            for (int index = 0; index < _slots.Count; index++)
+            {
+                if (_slots[index].IsEmpty)
+                {
+                    emptyCount++; 
+                    continue;
+                }
+                
+                if (emptyCount <= 0) continue;
+
+                var moved = _slots[index].Item;
+                int targetIndex = index - emptyCount;
+                
+                _slots[targetIndex].Item = moved;
+                _slots[index].Item = null;
+                
+                if (moved != null)
+                {
+                    shiftLeftMoves.Add(new ShiftItemData(moved, targetIndex));
+                }
+            }
+
+            return new MatchItemData
+            {
+                HasMatch = true,
+                Cleared = cleared,
+                ShiftLeftMoves = shiftLeftMoves
+            };
+        }
+
+        public void AnimateInsert(InsertItemData insertItemData)
+        {
+            if (insertItemData == null || !insertItemData.IsValid) return;
+
+            Transform insertPos = _deckView.GetSlotPos(insertItemData.TargetSlotIndex);
+            
+            if (insertPos == null)
+            {
+                Debug.LogError($"[DeckManager] Slot pos at index {insertItemData.TargetSlotIndex} is null.");
+                return;
+            }
+
+            float moveStepValue = _deckConfig != null ? _deckConfig.MoveStepValue : 12f;
+            
+            ChangeSortingLayerToDeckFront(insertItemData.ItemView);
+            
+            Vector3 deckScale = Vector3.one * CalculateTargetScale(insertItemData.ItemView);
+            insertItemData.ItemView.StartFlightToSlot(insertPos, deckScale, moveStepValue);
+
+            // Existing shifted items retarget to new pos.
+            for (int index = 0; index < insertItemData.ShiftRightMoves.Count; index++)
+            {
+                Transform anchor = _deckView.GetSlotPos(insertItemData.ShiftRightMoves[index].TargetSlotIndex);
+                
+                if (anchor == null)
+                {
+                    Debug.LogError($"[DeckManager] Slot pos at index {insertItemData.ShiftRightMoves[index].TargetSlotIndex} is null.");
+                    continue;
+                }
+                
+                CollectibleItemView item = insertItemData.ShiftRightMoves[index].Item;
+                item.StartFlightToSlot(anchor, item.transform.localScale, moveStepValue);
+            }
+        }
+
+        public void AnimateMatch(MatchItemData matchItemData)
+        {
+            if (matchItemData == null || !matchItemData.HasMatch) return;
+            
+            CollectibleItemView triggerItem = FindTriggerItem(matchItemData.Cleared);
+
+            if (triggerItem != null)
+            {
+                triggerItem.SetOnArrivedCallback(() => ClearThenShiftLeft(matchItemData));
+            }
+            else
+            {
+                ClearThenShiftLeft(matchItemData);
+            }
+        }
+
+        private static CollectibleItemView FindTriggerItem(List<CollectibleItemView> cleared)
+        {
+            for (int index = 0; index < cleared.Count; index++)
+            {
+                if (cleared[index].CurrentAnimState == CollectibleItemView.AnimState.MovingToSlot)
+                    return cleared[index];
+            }
+            return null;
+        }
+
+        private void ClearThenShiftLeft(MatchItemData itemData)
+        {
+            float clearDuration = _deckConfig != null ? _deckConfig.MatchClearDuration : 0.15f;
+
+            int remaining = itemData.Cleared.Count;
+            if (remaining == 0)
+            {
+                StartShiftLeftMoves(itemData.ShiftLeftMoves);
+                return;
+            }
+
+            for (int index = 0; index < itemData.Cleared.Count; index++)
+            {
+                itemData.Cleared[index].StartClear(clearDuration, item => {
+                    _itemFactory.Despawn(item);
+                    remaining--;
+                    
+                    if (remaining == 0)
+                    {
+                        StartShiftLeftMoves(itemData.ShiftLeftMoves);
+                    }
+                });
+            }
+        }
+
+        private void StartShiftLeftMoves(List<ShiftItemData> moves)
+        {
+            float smoothness = _deckConfig != null ? _deckConfig.MoveStepValue : 12f;
+
+            for (int index = 0; index < moves.Count; index++)
+            {
+                ShiftItemData itemData = moves[index];
+                
+                if (itemData.Item == null) continue;
+                if (itemData.TargetSlotIndex < 0 || itemData.TargetSlotIndex >= _slots.Count) continue;
+                
+                // The newer command's positioning overwrites
+                if (_slots[itemData.TargetSlotIndex].Item != itemData.Item) continue;
+
+                Transform anchor = _deckView.GetSlotPos(itemData.TargetSlotIndex);
+                
+                if (anchor == null)
+                {
+                    Debug.LogError($"[DeckManager] Slot anchor at index {itemData.TargetSlotIndex} is null.");
+                    continue;
+                }
+                
+                itemData.Item.StartFlightToSlot(anchor, itemData.Item.transform.localScale, smoothness);
+            }
+        }
+
+        private static void ChangeSortingLayerToDeckFront(CollectibleItemView itemView)
+        {
+            var itemViewSpriteRenderer = itemView.SpriteRenderer;
+            
+            if (itemViewSpriteRenderer == null) return;
+            
+            itemViewSpriteRenderer.sortingLayerName = DeckFrontSortingLayer;
+        }
+
+        private float CalculateTargetScale(CollectibleItemView itemView)
+        {
+            var itemViewSpriteRenderer = itemView.SpriteRenderer;
+            if (itemViewSpriteRenderer == null || itemViewSpriteRenderer.sprite == null) return 1f;
+
+            Vector2 size = itemViewSpriteRenderer.sprite.bounds.size;
+            float maxDim = Mathf.Max(size.x, size.y);
+            
+            if (maxDim <= 0f) return 1f;
+
+            float slotSize = _deckConfig != null ? _deckConfig.SlotSize : 1f;
+            
+            return slotSize / maxDim;
         }
 
         private int FindMatchIndex()
         {
             int upperBound = _slots.Count - 2;
 
-            for (int i = 0; i < upperBound; i++)
+            for (int index = 0; index < upperBound; index++)
             {
-                if (_slots[i].IsEmpty) break;
+                if (_slots[index].IsEmpty) break;
 
-                CollectibleItemData type = _slots[i].Type;
-                if (_slots[i + 1].Type == type && _slots[i + 2].Type == type)
-                    return i;
+                CollectibleItemData type = _slots[index].Type;
+                if (_slots[index + 1].Type == type && _slots[index + 2].Type == type)
+                    return index;
             }
 
             return -1;
         }
 
+        // Snap-only match clear (Step 2B fallback). Replaced by AnimateClearMatch.
+        /*
         private void ClearMatch(int startIndex)
         {
             for (int i = 0; i < MatchTreshold; i++)
@@ -111,7 +322,10 @@ namespace TripleMatch.Deck
                     _itemFactory.Despawn(view);
             }
         }
+        */
 
+        // Snap-only compact (Step 2B fallback). Replaced by AnimateCompactLeft.
+        /*
         private void OptimizedShiftLeft()
         {
             int emptySlotCount = 0;
@@ -123,23 +337,16 @@ namespace TripleMatch.Deck
                     emptySlotCount++;
                     continue;
                 }
-                else
+                if (emptySlotCount > 0)
                 {
-                    if (emptySlotCount > 0)
-                    {
-                        var moved = _slots[index].Item;
-                        
-                        _slots[index - emptySlotCount].Item = moved;
-                        _slots[index].Item = null;
-                        
-                        if (moved != null)
-                        {
-                            MoveToSlot(moved, index - emptySlotCount);
-                        }
-                    }
+                    var moved = _slots[index].Item;
+                    _slots[index - emptySlotCount].Item = moved;
+                    _slots[index].Item = null;
+                    if (moved != null) MoveToSlot(moved, index - emptySlotCount);
                 }
             }
         }
+        */
 
         /// <summary>
         /// Finds first available -empty- index (left-most)
@@ -150,97 +357,79 @@ namespace TripleMatch.Deck
         {
             int lastSameType = -1;
             
-            for (int i = 0; i < _slots.Count; i++)
+            for (int index = 0; index < _slots.Count; index++)
             {
-                if (!_slots[i].IsEmpty && _slots[i].Type == type)
+                if (!_slots[index].IsEmpty && _slots[index].Type == type)
                 {
-                    lastSameType = i;
+                    lastSameType = index;
                 }
             }
 
             if (lastSameType >= 0) return lastSameType + 1;
 
-            for (int i = 0; i < _slots.Count; i++)
+            for (int index = 0; index < _slots.Count; index++)
             {
-                if (_slots[i].IsEmpty) return i;
+                if (_slots[index].IsEmpty) return index;
             }
 
             return -1;
         }
 
-        /// <summary>
-        /// Shifts items starting from targetIndex one slot to the right, stopping at the first empty slot.
-        /// </summary>
-        /// <param name="targetIndex"></param>
+        // Snap-only shift right (Step 2A/2B fallback). Replaced by PrepareShiftRight + tween.
+        /*
         private void ShiftRight(int targetIndex)
         {
             int lastIndex = _slots.Count - 1;
 
-            // Find the first empty slot at or after targetIndex
             int firstEmpty = -1;
-            
             for (int i = targetIndex; i <= lastIndex; i++)
             {
-                if (_slots[i].IsEmpty)
-                {
-                    firstEmpty = i;
-                    break;
-                }
+                if (_slots[i].IsEmpty) { firstEmpty = i; break; }
             }
-            if (firstEmpty < 0) return; // nothing to shift
+            if (firstEmpty < 0) return;
 
             for (int i = firstEmpty; i > targetIndex; i--)
             {
                 var moved = _slots[i - 1].Item;
-                
                 _slots[i].Item = moved;
                 _slots[i - 1].Item = null;
-
-                if (moved != null)
-                {
-                    MoveToSlot(moved, i);
-                }
+                if (moved != null) MoveToSlot(moved, i);
             }
         }
+        */
 
-        private void PlaceInSlot(CollectibleItemView item, int slotIndex)
-        {
-            _slots[slotIndex].Item = item;
-            MoveToSlot(item, slotIndex);
-        }
-
+        [Obsolete]
         private void MoveToSlot(CollectibleItemView item, int slotIndex)
         {
-            Transform anchor = _view.GetSlotAnchor(slotIndex);
-            
+            Transform anchor = _deckView.GetSlotPos(slotIndex);
+
             if (anchor == null)
             {
                 Debug.LogError($"[DeckManager] Slot anchor at index {slotIndex} is null.");
                 return;
             }
+            
+            var itemTransform = item.transform;
 
-            var t = item.transform;
-            
-            t.SetParent(anchor, worldPositionStays: false);
-            
-            t.localPosition = Vector3.zero;
-            t.localRotation = Quaternion.identity;
-            t.localScale = Vector3.one;
+            itemTransform.SetParent(anchor, worldPositionStays: false);
+
+            itemTransform.localPosition = Vector3.zero;
+            itemTransform.localRotation = Quaternion.identity;
         }
 
         private int CountFilled()
         {
-            int n = 0;
+            int filled = 0;
             
-            for (int i = 0; i < _slots.Count; i++)
+            for (int index = 0; index < _slots.Count; index++)
             {
-                if (!_slots[i].IsEmpty)
+                if (!_slots[index].IsEmpty)
                 {
-                    n++;
+                    filled++;
                 }
             }
             
-            return n;
+            return filled;
         }
         
         /*[Obsolete]
