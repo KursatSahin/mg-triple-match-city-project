@@ -1,27 +1,26 @@
- using Cysharp.Threading.Tasks;
+using Cysharp.Threading.Tasks;
+using TripleMatch.Core.Data;
+using TripleMatch.Runtime;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using VContainer.Unity;
 
 namespace TripleMatch.Core
 {
     /// <summary>
-    /// App bootstrapper, not a pure c# DI solution but it's supported by vcontainer
-    /// We can use [RuntimeInitializeOnLoadMethod] instead of this without vcontainer
+    /// App bootstrapper. Initializes the data manager with a PlayerPrefs provider, loads the
+    /// save, and asks the scene flow service to switch from Bootstrap to MainMenu.
     /// </summary>
     public class GameBootstrapper : IStartable
     {
         private readonly IDataManager _dataManager;
+        private readonly ISceneFlowService _sceneFlowService;
 
-        public GameBootstrapper(IDataManager dataManager)
+        public GameBootstrapper(IDataManager dataManager, ISceneFlowService sceneFlowService)
         {
             _dataManager = dataManager;
+            _sceneFlowService = sceneFlowService;
         }
 
-        /// <summary>
-        /// VContainer entry point
-        /// Starts the async initialization flow
-        /// </summary>
         public void Start()
         {
             InitializeAsync().Forget();
@@ -32,11 +31,10 @@ namespace TripleMatch.Core
             Application.targetFrameRate = 60;
             QualitySettings.vSyncCount = 0;
 
-            await _dataManager.LoadData();
-            
-            await SceneManager.LoadSceneAsync("Game", LoadSceneMode.Additive).ToUniTask();
+            _dataManager.Initialize(new PlayerPrefsProvider());
+            _dataManager.Load();
 
-            await SceneManager.UnloadSceneAsync("Bootstrap").ToUniTask();
+            await _sceneFlowService.GoToScene(SceneFlowService.MainMenuSceneName);
         }
     }
 }

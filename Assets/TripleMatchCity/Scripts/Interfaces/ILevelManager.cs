@@ -11,5 +11,6 @@ namespace TripleMatch.Level
 
         void LoadLevel(int displayIndex);
         void OnLevelCompleted();
+        void ResetProgress();
     }
 }
