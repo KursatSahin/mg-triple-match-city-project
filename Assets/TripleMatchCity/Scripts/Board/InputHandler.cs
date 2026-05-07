@@ -1,10 +1,11 @@
+using TripleMatch.Deck;
 using UnityEngine;
 using VContainer;
 
 namespace TripleMatch.Board
 {
     /// <summary>
-    /// Tracks tap input on the board and forwards the picked item to the board manager.
+    /// Tracks tap input on the board and forwards the picked item to the deck.
     /// Uses Physics2D.OverlapPoint with item polygon colliders.
     /// </summary>
     public class InputHandler : MonoBehaviour
@@ -12,12 +13,14 @@ namespace TripleMatch.Board
         [SerializeField] private Camera worldCamera;
 
         private IBoardManager _boardManager;
+        private IDeckManager _deckManager;
         private bool _isProcessing;
 
         [Inject]
-        public void Construct(IBoardManager boardManager)
+        public void Construct(IBoardManager boardManager, IDeckManager deckManager)
         {
             _boardManager = boardManager;
+            _deckManager = deckManager;
         }
 
         private void Awake()
@@ -37,14 +40,16 @@ namespace TripleMatch.Board
             Vector2 worldPoint = worldCamera.ScreenToWorldPoint(screenPos);
 
             CollectibleItemView picked = PickTopItem(worldPoint);
-            
+
             if (picked == null) return;
+            if (_deckManager.IsFull) return;
 
             _isProcessing = true;
-            
+
             try
             {
-                _boardManager.RemoveItem(picked);
+                _boardManager.DetachItem(picked);
+                _deckManager.TryInsert(picked);
             }
             finally
             {
