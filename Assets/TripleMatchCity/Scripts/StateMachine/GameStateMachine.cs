@@ -14,6 +14,7 @@ namespace TripleMatch.StateMachine
     public class GameStateMachine : IGameStateMachine, IStartable, IDisposable
     {
         private readonly ITimerManager _timerManager;
+        private readonly ILevelManager _levelManager;
 
         private EventBinding<GoalCompletedEvent> _goalBinding;
         private EventBinding<TimerExpiredEvent> _timerBinding;
@@ -22,9 +23,10 @@ namespace TripleMatch.StateMachine
         public GameState CurrentState { get; private set; } = GameState.Playing;
         public bool IsPlaying => CurrentState == GameState.Playing;
 
-        public GameStateMachine(ITimerManager timerManager)
+        public GameStateMachine(ITimerManager timerManager, ILevelManager levelManager)
         {
             _timerManager = timerManager;
+            _levelManager = levelManager;
         }
 
         public void Start()
@@ -68,9 +70,14 @@ namespace TripleMatch.StateMachine
             _timerManager?.Pause();
 
             if (next == GameState.Won)
+            {
+                _levelManager?.OnLevelCompleted();
                 EventBus<GameWonEvent>.Raise(new GameWonEvent());
+            }
             else if (next == GameState.Failed)
+            {
                 EventBus<GameFailedEvent>.Raise(new GameFailedEvent());
+            }
         }
     }
 }
