@@ -183,6 +183,14 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2038599217965450649, guid: ca45a77cbe9713f42b20d02bca9f40b3, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2038599217965450649, guid: ca45a77cbe9713f42b20d02bca9f40b3, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1536395383
+      objectReference: {fileID: 0}
     - target: {fileID: 5698182338615188885, guid: ca45a77cbe9713f42b20d02bca9f40b3, type: 3}
       propertyPath: m_Name
       value: CollectibleItem_Tent (2)
@@ -223,11 +231,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6814113482631377003, guid: 647890b285d8da5489fca7160c934635, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.83
+      value: -0.6490001
       objectReference: {fileID: 0}
     - target: {fileID: 6814113482631377003, guid: 647890b285d8da5489fca7160c934635, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.689
+      value: -2.0649998
       objectReference: {fileID: 0}
     - target: {fileID: 6814113482631377003, guid: 647890b285d8da5489fca7160c934635, type: 3}
       propertyPath: m_LocalPosition.z
@@ -265,6 +273,14 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8937222531081822299, guid: 647890b285d8da5489fca7160c934635, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8937222531081822299, guid: 647890b285d8da5489fca7160c934635, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1536395383
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -283,6 +299,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7086666700719365158}
     m_Modifications:
+    - target: {fileID: 2216442108131514720, guid: 5667831988804cd429fdf5ee9a988370, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2216442108131514720, guid: 5667831988804cd429fdf5ee9a988370, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1536395383
+      objectReference: {fileID: 0}
     - target: {fileID: 5002798796491301275, guid: 5667831988804cd429fdf5ee9a988370, type: 3}
       propertyPath: m_Name
       value: CollectibleItem_Treasure Chest (1)
@@ -301,11 +325,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5615355935109248045, guid: 5667831988804cd429fdf5ee9a988370, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.342
+      value: -0.732
       objectReference: {fileID: 0}
     - target: {fileID: 5615355935109248045, guid: 5667831988804cd429fdf5ee9a988370, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.191
+      value: 1.819
       objectReference: {fileID: 0}
     - target: {fileID: 5615355935109248045, guid: 5667831988804cd429fdf5ee9a988370, type: 3}
       propertyPath: m_LocalPosition.z
@@ -364,6 +388,14 @@ PrefabInstance:
     - target: {fileID: 2829668257313499132, guid: d5913de83943603408b41dff2e9244c4, type: 3}
       propertyPath: m_Name
       value: CollectibleItem_Wooden Barrel (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5949576049366404876, guid: d5913de83943603408b41dff2e9244c4, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5949576049366404876, guid: d5913de83943603408b41dff2e9244c4, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1536395383
       objectReference: {fileID: 0}
     - target: {fileID: 7367853504776976207, guid: d5913de83943603408b41dff2e9244c4, type: 3}
       propertyPath: m_LocalScale.x
@@ -442,6 +474,14 @@ PrefabInstance:
     - target: {fileID: 2829668257313499132, guid: d5913de83943603408b41dff2e9244c4, type: 3}
       propertyPath: m_Name
       value: CollectibleItem_Wooden Barrel (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5949576049366404876, guid: d5913de83943603408b41dff2e9244c4, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5949576049366404876, guid: d5913de83943603408b41dff2e9244c4, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1536395383
       objectReference: {fileID: 0}
     - target: {fileID: 7367853504776976207, guid: d5913de83943603408b41dff2e9244c4, type: 3}
       propertyPath: m_LocalScale.x
@@ -535,11 +575,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4863649427038597727, guid: f22cd8f3e3fec8c479ea5b378da99822, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.048
+      value: 1.529
       objectReference: {fileID: 0}
     - target: {fileID: 4863649427038597727, guid: f22cd8f3e3fec8c479ea5b378da99822, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.455
+      value: 1.93
       objectReference: {fileID: 0}
     - target: {fileID: 4863649427038597727, guid: f22cd8f3e3fec8c479ea5b378da99822, type: 3}
       propertyPath: m_LocalPosition.z
@@ -578,8 +618,16 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6786633244773117077, guid: f22cd8f3e3fec8c479ea5b378da99822, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6786633244773117077, guid: f22cd8f3e3fec8c479ea5b378da99822, type: 3}
       propertyPath: m_SortingOrder
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6786633244773117077, guid: f22cd8f3e3fec8c479ea5b378da99822, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1536395383
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -699,11 +747,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4863649427038597727, guid: f22cd8f3e3fec8c479ea5b378da99822, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.784
+      value: -0.165
       objectReference: {fileID: 0}
     - target: {fileID: 4863649427038597727, guid: f22cd8f3e3fec8c479ea5b378da99822, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.795
+      value: 2.856
       objectReference: {fileID: 0}
     - target: {fileID: 4863649427038597727, guid: f22cd8f3e3fec8c479ea5b378da99822, type: 3}
       propertyPath: m_LocalPosition.z
@@ -742,8 +790,16 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6786633244773117077, guid: f22cd8f3e3fec8c479ea5b378da99822, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6786633244773117077, guid: f22cd8f3e3fec8c479ea5b378da99822, type: 3}
       propertyPath: m_SortingOrder
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6786633244773117077, guid: f22cd8f3e3fec8c479ea5b378da99822, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1536395383
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -858,11 +914,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 615985858652453579, guid: ca45a77cbe9713f42b20d02bca9f40b3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.384
+      value: -1.188
       objectReference: {fileID: 0}
     - target: {fileID: 615985858652453579, guid: ca45a77cbe9713f42b20d02bca9f40b3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.149
+      value: 2.688
       objectReference: {fileID: 0}
     - target: {fileID: 615985858652453579, guid: ca45a77cbe9713f42b20d02bca9f40b3, type: 3}
       propertyPath: m_LocalPosition.z
@@ -899,6 +955,14 @@ PrefabInstance:
     - target: {fileID: 615985858652453579, guid: ca45a77cbe9713f42b20d02bca9f40b3, type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2038599217965450649, guid: ca45a77cbe9713f42b20d02bca9f40b3, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2038599217965450649, guid: ca45a77cbe9713f42b20d02bca9f40b3, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1536395383
       objectReference: {fileID: 0}
     - target: {fileID: 5698182338615188885, guid: ca45a77cbe9713f42b20d02bca9f40b3, type: 3}
       propertyPath: m_Name
@@ -983,8 +1047,16 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8937222531081822299, guid: 647890b285d8da5489fca7160c934635, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8937222531081822299, guid: 647890b285d8da5489fca7160c934635, type: 3}
       propertyPath: m_SortingOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8937222531081822299, guid: 647890b285d8da5489fca7160c934635, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1536395383
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1134,6 +1206,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: CollectibleItem_Tree Large
       objectReference: {fileID: 0}
+    - target: {fileID: 8032530488840304433, guid: 0e495a6c33328d242806915bf0d69716, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8032530488840304433, guid: 0e495a6c33328d242806915bf0d69716, type: 3}
+      propertyPath: m_SortingOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8032530488840304433, guid: 0e495a6c33328d242806915bf0d69716, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1536395383
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1207,6 +1291,18 @@ PrefabInstance:
     - target: {fileID: 268105497614427418, guid: 3b5d006fddfbd1f41ab74596abaff606, type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8745280185152633443, guid: 3b5d006fddfbd1f41ab74596abaff606, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8745280185152633443, guid: 3b5d006fddfbd1f41ab74596abaff606, type: 3}
+      propertyPath: m_SortingOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8745280185152633443, guid: 3b5d006fddfbd1f41ab74596abaff606, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1536395383
       objectReference: {fileID: 0}
     - target: {fileID: 8809615686697789735, guid: 3b5d006fddfbd1f41ab74596abaff606, type: 3}
       propertyPath: m_Name
@@ -1428,8 +1524,16 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6786633244773117077, guid: f22cd8f3e3fec8c479ea5b378da99822, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6786633244773117077, guid: f22cd8f3e3fec8c479ea5b378da99822, type: 3}
       propertyPath: m_SortingOrder
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6786633244773117077, guid: f22cd8f3e3fec8c479ea5b378da99822, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1536395383
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1504,6 +1608,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: CollectibleItem_Tree Large (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 8032530488840304433, guid: 0e495a6c33328d242806915bf0d69716, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8032530488840304433, guid: 0e495a6c33328d242806915bf0d69716, type: 3}
+      propertyPath: m_SortingOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8032530488840304433, guid: 0e495a6c33328d242806915bf0d69716, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1536395383
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1531,7 +1647,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &885074674
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1652,6 +1768,18 @@ PrefabInstance:
     - target: {fileID: 1168839442447882337, guid: 5630698f63af1a54da9b988265b6d6f1, type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6876746577921877970, guid: 5630698f63af1a54da9b988265b6d6f1, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6876746577921877970, guid: 5630698f63af1a54da9b988265b6d6f1, type: 3}
+      propertyPath: m_SortingOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6876746577921877970, guid: 5630698f63af1a54da9b988265b6d6f1, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1536395383
       objectReference: {fileID: 0}
     - target: {fileID: 8512919190031100205, guid: 5630698f63af1a54da9b988265b6d6f1, type: 3}
       propertyPath: m_Name
@@ -1784,6 +1912,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7086666700719365158}
     m_Modifications:
+    - target: {fileID: 235786076279009382, guid: 9ec3dbfe091e2774abbddc9ae8d8186f, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 235786076279009382, guid: 9ec3dbfe091e2774abbddc9ae8d8186f, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1536395383
+      objectReference: {fileID: 0}
     - target: {fileID: 5106677736277286985, guid: 9ec3dbfe091e2774abbddc9ae8d8186f, type: 3}
       propertyPath: m_Name
       value: CollectibleItem_Magic Stone Tower
@@ -1922,6 +2058,18 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3319008217772021828, guid: 382c0e4b3dc1ec2418c48a6d6e32dcef, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3319008217772021828, guid: 382c0e4b3dc1ec2418c48a6d6e32dcef, type: 3}
+      propertyPath: m_SortingOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 3319008217772021828, guid: 382c0e4b3dc1ec2418c48a6d6e32dcef, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1536395383
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1993,8 +2141,16 @@ PrefabInstance:
       value: CollectibleItem_Castle Round (1)
       objectReference: {fileID: 0}
     - target: {fileID: 6875122091203958454, guid: a8c48de3995c05742acf04dec96c5b6d, type: 3}
-      propertyPath: m_SortingOrder
+      propertyPath: m_SortingLayer
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6875122091203958454, guid: a8c48de3995c05742acf04dec96c5b6d, type: 3}
+      propertyPath: m_SortingOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6875122091203958454, guid: a8c48de3995c05742acf04dec96c5b6d, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1536395383
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2073,6 +2229,18 @@ PrefabInstance:
     - target: {fileID: 1824639054092736893, guid: 86acbf91afe68cb4ebb5bea4a651b574, type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4568006956864730803, guid: 86acbf91afe68cb4ebb5bea4a651b574, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4568006956864730803, guid: 86acbf91afe68cb4ebb5bea4a651b574, type: 3}
+      propertyPath: m_SortingOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4568006956864730803, guid: 86acbf91afe68cb4ebb5bea4a651b574, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1536395383
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2197,6 +2365,18 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8342184067637976390, guid: 087fb849f6444744587f159e70d408a1, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8342184067637976390, guid: 087fb849f6444744587f159e70d408a1, type: 3}
+      propertyPath: m_SortingOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8342184067637976390, guid: 087fb849f6444744587f159e70d408a1, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1536395383
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2215,6 +2395,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7205999890359708804}
     m_Modifications:
+    - target: {fileID: 2771552909061888073, guid: b31fdc926432f584bb9ae09a2982f417, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2771552909061888073, guid: b31fdc926432f584bb9ae09a2982f417, type: 3}
+      propertyPath: m_SortingOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2771552909061888073, guid: b31fdc926432f584bb9ae09a2982f417, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1536395383
+      objectReference: {fileID: 0}
     - target: {fileID: 5601962934203127189, guid: b31fdc926432f584bb9ae09a2982f417, type: 3}
       propertyPath: m_Name
       value: CollectibleItem_Campfire
@@ -2412,7 +2604,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1619752910}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2fafc4d6ccd66ef45b613e0b87ed5976, type: 3}
   m_Name: 
@@ -2495,6 +2687,18 @@ PrefabInstance:
     - target: {fileID: 4093849021833353916, guid: a8c48de3995c05742acf04dec96c5b6d, type: 3}
       propertyPath: m_Name
       value: CollectibleItem_Castle Round
+      objectReference: {fileID: 0}
+    - target: {fileID: 6875122091203958454, guid: a8c48de3995c05742acf04dec96c5b6d, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6875122091203958454, guid: a8c48de3995c05742acf04dec96c5b6d, type: 3}
+      propertyPath: m_SortingOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6875122091203958454, guid: a8c48de3995c05742acf04dec96c5b6d, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1536395383
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2589,11 +2793,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1824639054092736893, guid: 86acbf91afe68cb4ebb5bea4a651b574, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.6
+      value: -0.879
       objectReference: {fileID: 0}
     - target: {fileID: 1824639054092736893, guid: 86acbf91afe68cb4ebb5bea4a651b574, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.03
+      value: -2.406
       objectReference: {fileID: 0}
     - target: {fileID: 1824639054092736893, guid: 86acbf91afe68cb4ebb5bea4a651b574, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2630,6 +2834,18 @@ PrefabInstance:
     - target: {fileID: 1824639054092736893, guid: 86acbf91afe68cb4ebb5bea4a651b574, type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4568006956864730803, guid: 86acbf91afe68cb4ebb5bea4a651b574, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4568006956864730803, guid: 86acbf91afe68cb4ebb5bea4a651b574, type: 3}
+      propertyPath: m_SortingOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4568006956864730803, guid: 86acbf91afe68cb4ebb5bea4a651b574, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1536395383
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2704,6 +2920,18 @@ PrefabInstance:
     - target: {fileID: 268105497614427418, guid: 3b5d006fddfbd1f41ab74596abaff606, type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8745280185152633443, guid: 3b5d006fddfbd1f41ab74596abaff606, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8745280185152633443, guid: 3b5d006fddfbd1f41ab74596abaff606, type: 3}
+      propertyPath: m_SortingOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8745280185152633443, guid: 3b5d006fddfbd1f41ab74596abaff606, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1536395383
       objectReference: {fileID: 0}
     - target: {fileID: 8809615686697789735, guid: 3b5d006fddfbd1f41ab74596abaff606, type: 3}
       propertyPath: m_Name
@@ -2782,6 +3010,14 @@ PrefabInstance:
     - target: {fileID: 615985858652453579, guid: ca45a77cbe9713f42b20d02bca9f40b3, type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2038599217965450649, guid: ca45a77cbe9713f42b20d02bca9f40b3, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2038599217965450649, guid: ca45a77cbe9713f42b20d02bca9f40b3, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1536395383
       objectReference: {fileID: 0}
     - target: {fileID: 5698182338615188885, guid: ca45a77cbe9713f42b20d02bca9f40b3, type: 3}
       propertyPath: m_Name
@@ -2960,6 +3196,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: CollectibleItem_House
       objectReference: {fileID: 0}
+    - target: {fileID: 5031983650305480479, guid: 9f2eb0b1c2804b748ada5c3c6a3a6bf4, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5031983650305480479, guid: 9f2eb0b1c2804b748ada5c3c6a3a6bf4, type: 3}
+      propertyPath: m_SortingOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 5031983650305480479, guid: 9f2eb0b1c2804b748ada5c3c6a3a6bf4, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1536395383
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2978,6 +3226,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7086666700719365158}
     m_Modifications:
+    - target: {fileID: 235786076279009382, guid: 9ec3dbfe091e2774abbddc9ae8d8186f, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 235786076279009382, guid: 9ec3dbfe091e2774abbddc9ae8d8186f, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1536395383
+      objectReference: {fileID: 0}
     - target: {fileID: 5106677736277286985, guid: 9ec3dbfe091e2774abbddc9ae8d8186f, type: 3}
       propertyPath: m_Name
       value: CollectibleItem_Magic Stone Tower (1)
@@ -3116,6 +3372,14 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8937222531081822299, guid: 647890b285d8da5489fca7160c934635, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8937222531081822299, guid: 647890b285d8da5489fca7160c934635, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1536395383
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3134,6 +3398,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7086666700719365158}
     m_Modifications:
+    - target: {fileID: 2216442108131514720, guid: 5667831988804cd429fdf5ee9a988370, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2216442108131514720, guid: 5667831988804cd429fdf5ee9a988370, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1536395383
+      objectReference: {fileID: 0}
     - target: {fileID: 5002798796491301275, guid: 5667831988804cd429fdf5ee9a988370, type: 3}
       propertyPath: m_Name
       value: CollectibleItem_Treasure Chest
@@ -3272,6 +3544,18 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3319008217772021828, guid: 382c0e4b3dc1ec2418c48a6d6e32dcef, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3319008217772021828, guid: 382c0e4b3dc1ec2418c48a6d6e32dcef, type: 3}
+      propertyPath: m_SortingOrder
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 3319008217772021828, guid: 382c0e4b3dc1ec2418c48a6d6e32dcef, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1536395383
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3290,6 +3574,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7086666700719365158}
     m_Modifications:
+    - target: {fileID: 2216442108131514720, guid: 5667831988804cd429fdf5ee9a988370, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2216442108131514720, guid: 5667831988804cd429fdf5ee9a988370, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1536395383
+      objectReference: {fileID: 0}
     - target: {fileID: 5002798796491301275, guid: 5667831988804cd429fdf5ee9a988370, type: 3}
       propertyPath: m_Name
       value: CollectibleItem_Treasure Chest (2)
@@ -3371,6 +3663,14 @@ PrefabInstance:
     - target: {fileID: 2829668257313499132, guid: d5913de83943603408b41dff2e9244c4, type: 3}
       propertyPath: m_Name
       value: CollectibleItem_Wooden Barrel
+      objectReference: {fileID: 0}
+    - target: {fileID: 5949576049366404876, guid: d5913de83943603408b41dff2e9244c4, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5949576049366404876, guid: d5913de83943603408b41dff2e9244c4, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1536395383
       objectReference: {fileID: 0}
     - target: {fileID: 7367853504776976207, guid: d5913de83943603408b41dff2e9244c4, type: 3}
       propertyPath: m_LocalScale.x
@@ -3506,6 +3806,18 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4568006956864730803, guid: 86acbf91afe68cb4ebb5bea4a651b574, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4568006956864730803, guid: 86acbf91afe68cb4ebb5bea4a651b574, type: 3}
+      propertyPath: m_SortingOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4568006956864730803, guid: 86acbf91afe68cb4ebb5bea4a651b574, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1536395383
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3524,6 +3836,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7086666700719365158}
     m_Modifications:
+    - target: {fileID: 235786076279009382, guid: 9ec3dbfe091e2774abbddc9ae8d8186f, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 235786076279009382, guid: 9ec3dbfe091e2774abbddc9ae8d8186f, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1536395383
+      objectReference: {fileID: 0}
     - target: {fileID: 5106677736277286985, guid: 9ec3dbfe091e2774abbddc9ae8d8186f, type: 3}
       propertyPath: m_Name
       value: CollectibleItem_Magic Stone Tower (2)
@@ -3898,7 +4218,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3152593578119721766, guid: f8753cd7a7131784ca92a78cd1dc54c6, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3839083785381480440, guid: f8753cd7a7131784ca92a78cd1dc54c6, type: 3}
       propertyPath: fadeBackground
@@ -4387,8 +4707,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1707091675
+  m_SortingLayer: 1
   m_SortingOrder: -1
   m_Sprite: {fileID: 4585537247781460299, guid: f2b5ede5e729f514cab8c5846aebd097, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
