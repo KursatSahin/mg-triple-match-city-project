@@ -2,7 +2,7 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!78 &1
 TagManager:
-  serializedVersion: 2
+  serializedVersion: 3
   tags: []
   layers:
   - Default
@@ -41,3 +41,23 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: BoardBg
+    uniqueID: 2587875621
+    locked: 0
+  - name: BoardItems
+    uniqueID: 2758571913
+    locked: 0
+  - name: DeckBack
+    uniqueID: 3054710721
+    locked: 0
+  - name: Deck
+    uniqueID: 1814074365
+    locked: 0
+  - name: DeckFront
+    uniqueID: 2347799637
+    locked: 0
+  - name: UI
+    uniqueID: 3908893923
+    locked: 0
+  m_RenderingLayers:
+  - Default

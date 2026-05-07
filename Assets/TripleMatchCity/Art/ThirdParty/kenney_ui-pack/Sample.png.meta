@@ -129,6 +129,32 @@ TextureImporter:
       name: Sample_0
       rect:
         serializedVersion: 2
+        x: 583
+        y: 77
+        width: 159
+        height: 163
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 459, y: 257.5}
+        - {x: -459, y: 257.5}
+        - {x: -459, y: -257.5}
+        - {x: 459, y: -257.5}
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 60ad67356d7b29fe0800000000000000
+      internalID: -1183681620893836794
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sample_1
+      rect:
+        serializedVersion: 2
         x: 0
         y: 0
         width: 918
@@ -139,10 +165,32 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 60ad67356d7b29fe0800000000000000
-      internalID: -1183681620893836794
+      spriteID: 6a7ff60e15798c04db3f8ffa08772596
+      internalID: 899177270
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sample_2
+      rect:
+        serializedVersion: 2
+        x: 399
+        y: 91
+        width: 159
+        height: 198
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 803879ba45f19ad439892ab29d2f6970
+      internalID: 430272842
       vertices: []
       indices: 
       edges: []
@@ -151,7 +199,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 07e6170347c2b0541bea2b5f37c1f276
     internalID: 0
     vertices: []
     indices: 
@@ -162,6 +210,8 @@ TextureImporter:
       entries: []
     nameFileIdTable:
       Sample_0: -1183681620893836794
+      Sample_1: 899177270
+      Sample_2: 430272842
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

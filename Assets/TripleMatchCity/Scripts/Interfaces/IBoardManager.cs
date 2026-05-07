@@ -10,5 +10,6 @@ namespace TripleMatch.Board
         IReadOnlyList<CollectibleItemView> ActiveItems { get; }
         UniTask BuildBoard(LevelDataSO level, Transform sceneParent);
         void ClearBoard();
+        void RemoveItem(CollectibleItemView view);
     }
 }

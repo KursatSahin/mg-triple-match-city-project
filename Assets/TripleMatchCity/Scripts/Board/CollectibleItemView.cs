@@ -64,6 +64,11 @@ namespace TripleMatch.Board
             IsRemovedFromBoard = true;
         }
 
+        public void ClearParent()
+        {
+            parentItem = null;
+        }
+
         public void ResetForPool()
         {
             instanceData = null;
