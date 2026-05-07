@@ -11,5 +11,6 @@ namespace TripleMatch.Board
         UniTask BuildBoard(LevelDataSO level, Transform sceneParent);
         void ClearBoard();
         void RemoveItem(CollectibleItemView view);
+        void DetachItem(CollectibleItemView view);
     }
 }

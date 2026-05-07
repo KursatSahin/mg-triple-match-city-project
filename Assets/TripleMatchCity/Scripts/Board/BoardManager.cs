@@ -60,15 +60,34 @@ namespace TripleMatch.Board
             if (view == null) return;
 
             int index = _activeItems.IndexOf(view);
-            
+
+            if (index < 0) return;
+
+            DetachLiveChildren(view);
+
+            view.MarkRemovedFromBoard();
+
+            _activeItems.RemoveAt(index);
+            _itemFactory.Despawn(view);
+        }
+
+        /// <summary>
+        /// Detaches the item from the board without despawning it.
+        /// </summary>
+        /// <param name="view"></param>
+        public void DetachItem(CollectibleItemView view)
+        {
+            if (view == null) return;
+
+            int index = _activeItems.IndexOf(view);
             if (index < 0) return;
 
             DetachLiveChildren(view);
             
             view.MarkRemovedFromBoard();
-
+            view.ClearParent();
+            
             _activeItems.RemoveAt(index);
-            _itemFactory.Despawn(view);
         }
 
         private void DetachLiveChildren(CollectibleItemView view)
