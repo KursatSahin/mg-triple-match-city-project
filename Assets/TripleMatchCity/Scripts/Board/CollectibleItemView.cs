@@ -83,14 +83,17 @@ namespace TripleMatch.Board
             IsRemovedFromBoard = false;
             
             transform.localPosition = data.Position;
+            transform.localEulerAngles = data.Rotation;
             transform.localScale = new Vector3(data.Scale.x, data.Scale.y, 1f);
 
             if (cachedSpriteRenderer != null)
             {
                 cachedSpriteRenderer.sortingOrder = data.SortingOrder;
-                cachedSpriteRenderer.sortingLayerName = string.IsNullOrEmpty(defaultSortingLayer)
-                    ? "Default"
-                    : defaultSortingLayer;
+                // Prefer the layer captured in level data; fall back to the prefab's layer, then to "Default".
+                string layer = !string.IsNullOrEmpty(data.SortingLayerName)
+                    ? data.SortingLayerName
+                    : (string.IsNullOrEmpty(defaultSortingLayer) ? "Default" : defaultSortingLayer);
+                cachedSpriteRenderer.sortingLayerName = layer;
                 var color = cachedSpriteRenderer.color;
                 color.a = 1f;
                 cachedSpriteRenderer.color = color;
