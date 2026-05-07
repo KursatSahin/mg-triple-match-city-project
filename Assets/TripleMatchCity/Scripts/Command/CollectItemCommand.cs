@@ -12,12 +12,14 @@ namespace TripleMatch.Command
     {
         private readonly IBoardManager _board;
         private readonly IDeckManager _deck;
+        private readonly IEventBus _eventBus;
         private readonly CollectibleItemView _item;
 
-        public CollectItemCommand(IBoardManager board, IDeckManager deck, CollectibleItemView item)
+        public CollectItemCommand(IBoardManager board, IDeckManager deck, IEventBus eventBus, CollectibleItemView item)
         {
             _board = board;
             _deck = deck;
+            _eventBus = eventBus;
             _item = item;
         }
 
@@ -35,7 +37,7 @@ namespace TripleMatch.Command
 
             if (_deck.IsFull)
             {
-                EventBus<DeckFullEvent>.Raise(new DeckFullEvent());
+                _eventBus.Raise(new DeckFullEvent());
             }
         }
     }

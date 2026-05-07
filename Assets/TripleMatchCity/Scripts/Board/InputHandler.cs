@@ -1,4 +1,5 @@
 using TripleMatch.Command;
+using TripleMatch.Core;
 using TripleMatch.Deck;
 using TripleMatch.StateMachine;
 using UnityEngine;
@@ -18,18 +19,21 @@ namespace TripleMatch.Board
         private IDeckManager _deckManager;
         private ICommandQueue _commandQueue;
         private IGameStateMachine _gameStateMachine;
+        private IEventBus _eventBus;
 
         [Inject]
         public void Construct(
             IBoardManager boardManager,
             IDeckManager deckManager,
             ICommandQueue commandQueue,
-            IGameStateMachine gameStateMachine)
+            IGameStateMachine gameStateMachine,
+            IEventBus eventBus)
         {
             _boardManager = boardManager;
             _deckManager = deckManager;
             _commandQueue = commandQueue;
             _gameStateMachine = gameStateMachine;
+            _eventBus = eventBus;
         }
 
         private void Awake()
@@ -51,7 +55,7 @@ namespace TripleMatch.Board
             if (picked == null) return;
             if (_deckManager.IsFull) return;
 
-            _commandQueue.Enqueue(new CollectItemCommand(_boardManager, _deckManager, picked));
+            _commandQueue.Enqueue(new CollectItemCommand(_boardManager, _deckManager, _eventBus, picked));
         }
 
         /// <summary>

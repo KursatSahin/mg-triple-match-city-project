@@ -2,11 +2,6 @@ using TripleMatch.Data;
 
 namespace TripleMatch.Core
 {
-    public struct ItemCollectedEvent : IEvent
-    {
-        public CollectibleItemData ItemData;
-    }
-
     public struct MatchCompletedEvent : IEvent
     {
         public CollectibleItemData ItemData;

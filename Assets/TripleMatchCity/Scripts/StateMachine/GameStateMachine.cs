@@ -15,6 +15,7 @@ namespace TripleMatch.StateMachine
     {
         private readonly ITimerManager _timerManager;
         private readonly ILevelManager _levelManager;
+        private readonly IEventBus _eventBus;
 
         private EventBinding<GoalCompletedEvent> _goalBinding;
         private EventBinding<TimerExpiredEvent> _timerBinding;
@@ -23,10 +24,11 @@ namespace TripleMatch.StateMachine
         public GameState CurrentState { get; private set; } = GameState.Playing;
         public bool IsPlaying => CurrentState == GameState.Playing;
 
-        public GameStateMachine(ITimerManager timerManager, ILevelManager levelManager)
+        public GameStateMachine(ITimerManager timerManager, ILevelManager levelManager, IEventBus eventBus)
         {
             _timerManager = timerManager;
             _levelManager = levelManager;
+            _eventBus = eventBus;
         }
 
         public void Start()
@@ -34,30 +36,30 @@ namespace TripleMatch.StateMachine
             CurrentState = GameState.Playing;
 
             _goalBinding = new EventBinding<GoalCompletedEvent>(_ => TransitionTo(GameState.Won));
-            EventBus<GoalCompletedEvent>.Register(_goalBinding);
+            _eventBus.Subscribe(_goalBinding);
 
             _timerBinding = new EventBinding<TimerExpiredEvent>(_ => TransitionTo(GameState.Failed));
-            EventBus<TimerExpiredEvent>.Register(_timerBinding);
+            _eventBus.Subscribe(_timerBinding);
 
             _deckFullBinding = new EventBinding<DeckFullEvent>(_ => TransitionTo(GameState.Failed));
-            EventBus<DeckFullEvent>.Register(_deckFullBinding);
+            _eventBus.Subscribe(_deckFullBinding);
         }
 
         public void Dispose()
         {
             if (_goalBinding != null)
             {
-                EventBus<GoalCompletedEvent>.Deregister(_goalBinding);
+                _eventBus.Unsubscribe(_goalBinding);
                 _goalBinding = null;
             }
             if (_timerBinding != null)
             {
-                EventBus<TimerExpiredEvent>.Deregister(_timerBinding);
+                _eventBus.Unsubscribe(_timerBinding);
                 _timerBinding = null;
             }
             if (_deckFullBinding != null)
             {
-                EventBus<DeckFullEvent>.Deregister(_deckFullBinding);
+                _eventBus.Unsubscribe(_deckFullBinding);
                 _deckFullBinding = null;
             }
         }
@@ -72,11 +74,11 @@ namespace TripleMatch.StateMachine
             if (next == GameState.Won)
             {
                 _levelManager?.OnLevelCompleted();
-                EventBus<GameWonEvent>.Raise(new GameWonEvent());
+                _eventBus.Raise(new GameWonEvent());
             }
             else if (next == GameState.Failed)
             {
-                EventBus<GameFailedEvent>.Raise(new GameFailedEvent());
+                _eventBus.Raise(new GameFailedEvent());
             }
         }
     }
