@@ -2,6 +2,7 @@ using System;
 using TripleMatch.Core;
 using TripleMatch.Data;
 using TripleMatch.Level;
+using TripleMatch.Runtime;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -26,6 +27,9 @@ public class RootLifetimeScope : LifetimeScope
             .WithParameter(levelContainer)
             .WithParameter(levelManagerConfig)
             .As<ILevelManager>();
+
+        // Listens for MainMenuRequestedEvent and swaps Game -> MainMenu scenes.
+        builder.Register<SceneFlowService>(Lifetime.Singleton).AsImplementedInterfaces();
 
         // App boot flow: load data, switch from Bootstrap to MainMenu.
         builder.RegisterEntryPoint<GameBootstrapper>();

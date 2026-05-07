@@ -1,10 +1,12 @@
 using TripleMatch.Board;
+using TripleMatch.Core;
 using TripleMatch.Deck;
 
 namespace TripleMatch.Command
 {
     /// <summary>
-    /// Picks a collectible item from the board and inserts it into the deck.
+    /// Picks a collectible item from the board and inserts it into the deck
+    /// If after the insert and the match resolution the deck is still full, raise DeckFullEvent
     /// </summary>
     public class CollectItemCommand : ICommand
     {
@@ -30,6 +32,11 @@ namespace TripleMatch.Command
 
             var matchPlan = _deck.ResolveMatchData();
             _deck.AnimateMatch(matchPlan);
+
+            if (_deck.IsFull)
+            {
+                EventBus<DeckFullEvent>.Raise(new DeckFullEvent());
+            }
         }
     }
 }
