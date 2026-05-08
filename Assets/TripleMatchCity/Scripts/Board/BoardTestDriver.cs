@@ -14,6 +14,7 @@ namespace TripleMatch.Board
         [SerializeField] private LevelDataSO level;
         [SerializeField] private GameObject levelRootPrefab;
         [SerializeField] private CollectibleItemView itemViewPrefab;
+        [SerializeField] private CameraController cameraController;
         [SerializeField] private bool autoBuildOnStart = true;
 
         private ItemFactory _factory;
@@ -65,7 +66,7 @@ namespace TripleMatch.Board
             if (_factory != null) return;
             
             _factory = new ItemFactory(itemViewPrefab);
-            _boardManager = new BoardManager(_factory, levelRootPrefab);
+            _boardManager = new BoardManager(_factory, levelRootPrefab, cameraController);
         }
 
         async UniTaskVoid BuildBoardAsync()

@@ -8,18 +8,27 @@ using VContainer;
 namespace TripleMatch.Board
 {
     /// <summary>
-    /// Tracks tap input on the board. Each accepted tap is wrapped in a CollectItemCommand and dispatched immediately.
-    /// Taps are ignored while the game state machine is not in Playing.
+    /// Tracks tap input on the board, Each accepted tap is wrapped in a CollectItemCommand and dispatched immediately.
+    /// Tracks drag input on the board (with avoiding collect item)
+    /// Tracks pinch input on the board (with avoiding collect item)
+    /// Ignored while the game state machine is not in Playing.
     /// </summary>
     public class InputHandler : MonoBehaviour
     {
         [SerializeField] private Camera worldCamera;
+        [SerializeField] private float tapMaxScreenMovement = 20f;
+        [SerializeField] private float tapMaxDuration = 0.4f;
 
         private IBoardManager _boardManager;
         private IDeckManager _deckManager;
         private ICommandQueue _commandQueue;
         private IGameStateMachine _gameStateMachine;
         private IEventBus _eventBus;
+
+        private Vector2 _touchStartScreen;
+        private float _touchStartTime;
+        private bool _touchActive;
+        private bool _multiTouchOccurred;
 
         [Inject]
         public void Construct(
@@ -45,11 +54,34 @@ namespace TripleMatch.Board
         {
             if (worldCamera == null) return;
             if (_gameStateMachine != null && !_gameStateMachine.IsPlaying) return;
-            if (!Input.GetMouseButtonDown(0)) return;
 
-            Vector3 screenPos = Input.mousePosition;
-            Vector2 worldPoint = worldCamera.ScreenToWorldPoint(screenPos);
+            // Track multi-touch even on intermediate frames; pinch must invalidate the tap.
+            if (_touchActive && Input.touchCount > 1) _multiTouchOccurred = true;
 
+            if (Input.GetMouseButtonDown(0))
+            {
+                _touchStartScreen = Input.mousePosition;
+                _touchStartTime = Time.time;
+                _touchActive = true;
+                _multiTouchOccurred = Input.touchCount > 1;
+                return;
+            }
+
+            if (!Input.GetMouseButtonUp(0)) return;
+            if (!_touchActive) return;
+
+            _touchActive = false;
+
+            if (_multiTouchOccurred) return;
+
+            float duration = Time.time - _touchStartTime;
+            if (duration > tapMaxDuration) return;
+
+            Vector2 endScreen = Input.mousePosition;
+            float distance = Vector2.Distance(_touchStartScreen, endScreen);
+            if (distance > tapMaxScreenMovement) return;
+
+            Vector2 worldPoint = worldCamera.ScreenToWorldPoint(endScreen);
             CollectibleItemView picked = PickTopItem(worldPoint);
 
             if (picked == null) return;
