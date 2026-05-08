@@ -14,11 +14,13 @@ namespace TripleMatch.Core
     {
         private readonly IDataManager _dataManager;
         private readonly ISceneFlowService _sceneFlowService;
+        private readonly IEventBus _eventBus;
 
-        public GameBootstrapper(IDataManager dataManager, ISceneFlowService sceneFlowService)
+        public GameBootstrapper(IDataManager dataManager, ISceneFlowService sceneFlowService, IEventBus eventBus)
         {
             _dataManager = dataManager;
             _sceneFlowService = sceneFlowService;
+            _eventBus = eventBus;
         }
 
         public void Start()
@@ -29,12 +31,11 @@ namespace TripleMatch.Core
         private async UniTaskVoid InitializeAsync()
         {
             Application.targetFrameRate = 60;
-            QualitySettings.vSyncCount = 0;
 
-            _dataManager.Initialize(new PlayerPrefsProvider());
+            _dataManager.Initialize();
             _dataManager.Load();
-
-            await _sceneFlowService.GoToScene(SceneFlowService.MainMenuSceneName);
+            
+            _eventBus?.Raise(new MainMenuRequestedEvent());
         }
     }
 }
