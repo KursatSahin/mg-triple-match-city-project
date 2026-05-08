@@ -119,7 +119,7 @@ MonoBehaviour:
     CollectibleParentIndex: -1
     IsCollectible: 1
   - Item: {fileID: 11400000, guid: 6e4f11a5f429cce4d950c5167492589c, type: 2}
-    Position: {x: -1.342, y: -3.191}
+    Position: {x: -0.342, y: 1.577}
     Rotation: {x: -0, y: 0, z: 0}
     Scale: {x: 0.2, y: 0.2}
     IsMirrored: 0
@@ -138,7 +138,7 @@ MonoBehaviour:
     IsCollectible: 1
   - Item: {fileID: 11400000, guid: 487237705d158df49b99616c32e939bf, type: 2}
     Position: {x: -0.046, y: 0.026}
-    Rotation: {x: -0, y: -0, z: 68.30484}
+    Rotation: {x: -0, y: 0, z: 68.30484}
     Scale: {x: 0.2, y: 0.2}
     IsMirrored: 0
     SortingOrder: 0
@@ -156,7 +156,7 @@ MonoBehaviour:
     IsCollectible: 1
   - Item: {fileID: 11400000, guid: 487237705d158df49b99616c32e939bf, type: 2}
     Position: {x: -0.398, y: 0.32}
-    Rotation: {x: -0, y: -0, z: 37.534904}
+    Rotation: {x: -0, y: 0, z: 37.534904}
     Scale: {x: 0.2, y: 0.2}
     IsMirrored: 0
     SortingOrder: 0

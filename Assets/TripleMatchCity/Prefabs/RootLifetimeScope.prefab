@@ -50,3 +50,5 @@ MonoBehaviour:
   autoInjectGameObjects: []
   levelContainer: {fileID: 11400000, guid: 3f0c478a4c200724fbb4afaf21868427, type: 2}
   levelManagerConfig: {fileID: 11400000, guid: 38d1239012543f6459ab058124d4cfc1, type: 2}
+  collectibleItemViewPrefab: {fileID: 404312827025574328, guid: 54133229463609e4695c803acaf63ba7, type: 3}
+  itemPoolConfig: {fileID: 11400000, guid: 9c33a7b1bf47dad4cb15d53a379e625e, type: 2}

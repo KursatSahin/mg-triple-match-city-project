@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using TripleMatch.Data;
@@ -5,7 +6,7 @@ using UnityEngine;
 
 namespace TripleMatch.Board
 {
-    public class BoardManager : IBoardManager
+    public class BoardManager : IBoardManager, IDisposable
     {
         private readonly IItemFactory _itemFactory;
         private readonly GameObject _levelRootPrefab;
@@ -38,13 +39,13 @@ namespace TripleMatch.Board
                 return;
             }
 
-            var instance = Object.Instantiate(_levelRootPrefab, sceneParent);
+            var instance = UnityEngine.Object.Instantiate(_levelRootPrefab, sceneParent);
             _levelRootInstance = instance.GetComponent<LevelRootView>();
             
             if (_levelRootInstance == null)
             {
                 Debug.LogError("[BoardManager] Level root prefab is missing LevelRootView component.");
-                Object.Destroy(instance);
+                UnityEngine.Object.Destroy(instance);
             
                 return;
             }
@@ -125,15 +126,22 @@ namespace TripleMatch.Board
             {
                 _itemFactory.Despawn(_activeItems[i]);
             }
-            
+
             _activeItems.Clear();
 
             if (_levelRootInstance != null)
             {
-                Object.Destroy(_levelRootInstance.gameObject);
-                
+                UnityEngine.Object.Destroy(_levelRootInstance.gameObject);
+
                 _levelRootInstance = null;
             }
+        }
+
+        public void Dispose()
+        {
+            // Return every still active item to the pool so pool counts stay consistent. Visuals get parented to the 
+            // DontDestroyOnLoad pool root before the scene unload destroys the game scene's GameObjects.
+            ClearBoard();
         }
 
         void ApplyBackground(BackgroundData background)
