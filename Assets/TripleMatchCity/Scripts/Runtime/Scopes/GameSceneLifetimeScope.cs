@@ -16,6 +16,7 @@ public class GameSceneLifetimeScope : LifetimeScope
     [SerializeField] private CollectibleItemView collectibleItemViewPrefab;
     [SerializeField] private Transform sceneParent;
     [SerializeField] private InputHandler inputHandler;
+    [SerializeField] private CameraController cameraController;
     [SerializeField] private DeckView deckView;
     [SerializeField] private DeckConfigSO deckConfig;
     [SerializeField] private GoalPanelView goalPanelView;
@@ -25,6 +26,8 @@ public class GameSceneLifetimeScope : LifetimeScope
     protected override void Configure(IContainerBuilder builder)
     {
         builder.Register<ItemFactory>(Lifetime.Singleton).WithParameter(collectibleItemViewPrefab).As<IItemFactory>();
+
+        builder.RegisterComponent(cameraController).As<ICameraController>();
 
         builder.Register<BoardManager>(Lifetime.Singleton).WithParameter(levelRootPrefab).As<IBoardManager>();
 

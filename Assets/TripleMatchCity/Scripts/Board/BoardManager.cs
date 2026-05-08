@@ -9,16 +9,18 @@ namespace TripleMatch.Board
     {
         private readonly IItemFactory _itemFactory;
         private readonly GameObject _levelRootPrefab;
+        private readonly ICameraController _cameraController;
         private readonly List<CollectibleItemView> _activeItems = new();
 
         private LevelRootView _levelRootInstance;
 
         public IReadOnlyList<CollectibleItemView> ActiveItems => _activeItems;
 
-        public BoardManager(IItemFactory itemFactory, GameObject levelRootPrefab)
+        public BoardManager(IItemFactory itemFactory, GameObject levelRootPrefab, ICameraController cameraController)
         {
             _itemFactory = itemFactory;
             _levelRootPrefab = levelRootPrefab;
+            _cameraController = cameraController;
         }
 
         public async UniTask BuildBoard(LevelDataSO level, Transform sceneParent)
@@ -48,7 +50,14 @@ namespace TripleMatch.Board
             }
 
             ApplyBackground(level.Background);
-            
+
+            // Configure camera bounds from the background sprite's world rect
+            if (_cameraController != null && _levelRootInstance.Background != null && _levelRootInstance.Background.sprite != null)
+            {
+                var bg = _levelRootInstance.Background;
+                _cameraController.SetBounds(bg.bounds.center, bg.bounds.size);
+            }
+
             SpawnList(level.CollectibleItems, _levelRootInstance.CollectibleItems);
             SpawnList(level.NonCollectibleItems, _levelRootInstance.NonCollectibleItems);
 
