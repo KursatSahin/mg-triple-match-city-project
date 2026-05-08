@@ -6,55 +6,57 @@ using TripleMatch.Level;
 using TripleMatch.StateMachine;
 using TripleMatch.UI;
 using UnityEngine;
-using UnityEngine.Serialization;
 using VContainer;
 using VContainer.Unity;
 
-public class GameSceneLifetimeScope : LifetimeScope
+namespace TripleMatchCity.Runtime.Scopes
 {
-    [SerializeField] private GameObject levelRootPrefab;
-    [SerializeField] private CollectibleItemView collectibleItemViewPrefab;
-    [SerializeField] private Transform sceneParent;
-    [SerializeField] private InputHandler inputHandler;
-    [SerializeField] private CameraController cameraController;
-    [SerializeField] private DeckView deckView;
-    [SerializeField] private DeckConfigSO deckConfig;
-    [SerializeField] private GoalPanelView goalPanelView;
-    [SerializeField] private TimerPanelView timerPanelView;
-    [SerializeField] private EndGamePopupView endGamePopupView;
-
-    protected override void Configure(IContainerBuilder builder)
+    public class GameSceneLifetimeScope : LifetimeScope
     {
-        builder.Register<ItemFactory>(Lifetime.Singleton).WithParameter(collectibleItemViewPrefab).As<IItemFactory>();
+        [SerializeField] private GameObject levelRootPrefab;
+        [SerializeField] private CollectibleItemView collectibleItemViewPrefab;
+        [SerializeField] private Transform sceneParent;
+        [SerializeField] private InputHandler inputHandler;
+        [SerializeField] private CameraController cameraController;
+        [SerializeField] private DeckView deckView;
+        [SerializeField] private DeckConfigSO deckConfig;
+        [SerializeField] private GoalPanelView goalPanelView;
+        [SerializeField] private TimerPanelView timerPanelView;
+        [SerializeField] private EndGamePopupView endGamePopupView;
 
-        builder.RegisterComponent(cameraController).As<ICameraController>();
+        protected override void Configure(IContainerBuilder builder)
+        {
+            builder.Register<ItemFactory>(Lifetime.Singleton).WithParameter(collectibleItemViewPrefab).As<IItemFactory>();
 
-        builder.Register<BoardManager>(Lifetime.Singleton).WithParameter(levelRootPrefab).As<IBoardManager>();
+            builder.RegisterComponent(cameraController).As<ICameraController>();
 
-        builder.RegisterComponent(deckView);
-        builder.Register<DeckManager>(Lifetime.Singleton).WithParameter(deckConfig).As<IDeckManager>();
+            builder.Register<BoardManager>(Lifetime.Singleton).WithParameter(levelRootPrefab).As<IBoardManager>();
 
-        builder.Register<CommandQueue>(Lifetime.Singleton).As<ICommandQueue>();
+            builder.RegisterComponent(deckView);
+            builder.Register<DeckManager>(Lifetime.Singleton).WithParameter(deckConfig).As<IDeckManager>();
 
-        builder.Register<GoalManager>(Lifetime.Singleton).AsImplementedInterfaces();
+            builder.Register<CommandQueue>(Lifetime.Singleton).As<ICommandQueue>();
 
-        builder.RegisterComponent(goalPanelView);
-        builder.Register<GoalPanelPresenter>(Lifetime.Singleton).AsImplementedInterfaces();
+            builder.Register<GoalManager>(Lifetime.Singleton).AsImplementedInterfaces();
 
-        builder.Register<TimerManager>(Lifetime.Singleton).AsImplementedInterfaces();
+            builder.RegisterComponent(goalPanelView);
+            builder.Register<GoalPanelPresenter>(Lifetime.Singleton).AsImplementedInterfaces();
 
-        builder.RegisterComponent(timerPanelView);
-        builder.Register<TimerPanelPresenter>(Lifetime.Singleton).AsImplementedInterfaces();
+            builder.Register<TimerManager>(Lifetime.Singleton).AsImplementedInterfaces();
 
-        builder.Register<GameStateMachine>(Lifetime.Singleton).AsImplementedInterfaces();
+            builder.RegisterComponent(timerPanelView);
+            builder.Register<TimerPanelPresenter>(Lifetime.Singleton).AsImplementedInterfaces();
 
-        builder.Register<UIService>(Lifetime.Singleton).As<IUIService>();
+            builder.Register<GameStateMachine>(Lifetime.Singleton).AsImplementedInterfaces();
 
-        builder.RegisterComponent(endGamePopupView);
-        builder.Register<EndGamePopupPresenter>(Lifetime.Singleton).AsImplementedInterfaces();
+            builder.Register<UIService>(Lifetime.Singleton).As<IUIService>();
 
-        builder.RegisterComponent(inputHandler);
+            builder.RegisterComponent(endGamePopupView);
+            builder.Register<EndGamePopupPresenter>(Lifetime.Singleton).AsImplementedInterfaces();
 
-        builder.RegisterEntryPoint<GameSceneEntryPoint>().WithParameter<Transform>(sceneParent);
+            builder.RegisterComponent(inputHandler);
+
+            builder.RegisterEntryPoint<GameSceneEntryPoint>().WithParameter<Transform>(sceneParent);
+        }
     }
 }
