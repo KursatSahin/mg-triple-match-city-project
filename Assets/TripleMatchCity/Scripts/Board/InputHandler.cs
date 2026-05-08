@@ -30,6 +30,10 @@ namespace TripleMatch.Board
         private bool _touchActive;
         private bool _multiTouchOccurred;
 
+        private Collider2D[] _hits = new Collider2D[10];
+        private int _hitsCount = 0;
+        private ContactFilter2D _contactFilter2D = new ContactFilter2D();
+        
         [Inject]
         public void Construct(
             IBoardManager boardManager,
@@ -48,6 +52,7 @@ namespace TripleMatch.Board
         private void Awake()
         {
             if (worldCamera == null) worldCamera = Camera.main;
+            _contactFilter2D.NoFilter();
         }
 
         private void Update()
@@ -97,15 +102,15 @@ namespace TripleMatch.Board
         /// <returns></returns>
         private CollectibleItemView PickTopItem(Vector2 worldPoint)
         {
-            Collider2D[] hits = Physics2D.OverlapPointAll(worldPoint);
-            if (hits == null || hits.Length == 0) return null;
+            _hitsCount = Physics2D.OverlapPoint(worldPoint, _contactFilter2D,_hits);
+            if (_hits == null || _hitsCount == 0) return null;
             
             CollectibleItemView top = null;
             int topOrder = int.MinValue;
 
-            for (int i = 0; i < hits.Length; i++)
+            for (int i = 0; i < _hitsCount; i++)
             {
-                var hit = hits[i];
+                var hit = _hits[i];
                 if (hit == null) continue;
 
                 var view = hit.GetComponentInParent<CollectibleItemView>();
