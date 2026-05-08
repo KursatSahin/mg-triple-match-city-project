@@ -14,8 +14,8 @@ namespace TripleMatch.Core
         /// <summary>Whether Load has run successfully.</summary>
         bool IsLoaded { get; }
 
-        /// <summary>Initialize with a storage provider. Must be called before Load.</summary>
-        void Initialize(IDataProvider provider);
+        /// <summary>Check if ready or not for Load with a storage provider. Must be called before Load.</summary>
+        bool IsInitialized();
 
         /// <summary>Load cached data from the provider.</summary>
         void Load();

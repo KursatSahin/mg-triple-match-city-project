@@ -1,3 +1,4 @@
+using System;
 using Cysharp.Threading.Tasks;
 using TripleMatch.Core.Data;
 using TripleMatch.Runtime;
@@ -32,7 +33,13 @@ namespace TripleMatch.Core
         {
             Application.targetFrameRate = 60;
 
-            _dataManager.Initialize();
+            if (!_dataManager.IsInitialized())
+            {
+                throw new NullReferenceException("[GameBootstrapper] IDataManager is not initialized. " +
+                                                 "That means IDataProvider is null (or not registered)." +
+                                                 "Check VContainer setup.");
+            }
+            
             _dataManager.Load();
             
             _eventBus?.Raise(new MainMenuRequestedEvent());
