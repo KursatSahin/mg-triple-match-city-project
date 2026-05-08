@@ -12,6 +12,7 @@ namespace TripleMatch.Board
     public class BoardTestDriver : MonoBehaviour
     {
         [SerializeField] private LevelDataSO level;
+        [SerializeField] private ItemPoolConfigSO itemPoolConfig;
         [SerializeField] private GameObject levelRootPrefab;
         [SerializeField] private CollectibleItemView itemViewPrefab;
         [SerializeField] private CameraController cameraController;
@@ -65,7 +66,7 @@ namespace TripleMatch.Board
         {
             if (_factory != null) return;
             
-            _factory = new ItemFactory(itemViewPrefab);
+            _factory = new ItemFactory(itemViewPrefab, itemPoolConfig);
             _boardManager = new BoardManager(_factory, levelRootPrefab, cameraController);
         }
 

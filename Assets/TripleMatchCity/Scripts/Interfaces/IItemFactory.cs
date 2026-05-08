@@ -10,6 +10,6 @@ namespace TripleMatch.Board
             Transform parent,
             CollectibleItemView parentItem);
 
-        void Despawn(CollectibleItemView view);
+        void Despawn(CollectibleItemView collectibleItemView);
     }
 }

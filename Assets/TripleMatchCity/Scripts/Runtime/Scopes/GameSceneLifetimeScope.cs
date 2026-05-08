@@ -14,7 +14,6 @@ namespace TripleMatchCity.Runtime.Scopes
     public class GameSceneLifetimeScope : LifetimeScope
     {
         [SerializeField] private GameObject levelRootPrefab;
-        [SerializeField] private CollectibleItemView collectibleItemViewPrefab;
         [SerializeField] private Transform sceneParent;
         [SerializeField] private InputHandler inputHandler;
         [SerializeField] private CameraController cameraController;
@@ -26,11 +25,9 @@ namespace TripleMatchCity.Runtime.Scopes
 
         protected override void Configure(IContainerBuilder builder)
         {
-            builder.Register<ItemFactory>(Lifetime.Singleton).WithParameter(collectibleItemViewPrefab).As<IItemFactory>();
-
             builder.RegisterComponent(cameraController).As<ICameraController>();
 
-            builder.Register<BoardManager>(Lifetime.Singleton).WithParameter(levelRootPrefab).As<IBoardManager>();
+            builder.Register<BoardManager>(Lifetime.Singleton).WithParameter(levelRootPrefab).AsImplementedInterfaces();
 
             builder.RegisterComponent(deckView);
             builder.Register<DeckManager>(Lifetime.Singleton).WithParameter(deckConfig).As<IDeckManager>();
