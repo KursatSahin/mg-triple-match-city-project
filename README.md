@@ -84,4 +84,4 @@ Android build: IL2CPP, ARM64, min API 26
 
 ## APK
 
-Download: [Releases](<release-link>)
+Download: [Releases](<https://github.com/KursatSahin/mg-triple-match-city-project/releases>)
