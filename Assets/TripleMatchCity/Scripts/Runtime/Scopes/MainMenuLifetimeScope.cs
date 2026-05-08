@@ -3,13 +3,16 @@ using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
-public class MainMenuLifetimeScope : LifetimeScope
+namespace TripleMatchCity.Runtime.Scopes
 {
-    [SerializeField] private MainMenuView mainMenuView;
-
-    protected override void Configure(IContainerBuilder builder)
+    public class MainMenuLifetimeScope : LifetimeScope
     {
-        builder.RegisterComponent(mainMenuView);
-        builder.Register<MainMenuPresenter>(Lifetime.Singleton).AsImplementedInterfaces();
+        [SerializeField] private MainMenuView mainMenuView;
+
+        protected override void Configure(IContainerBuilder builder)
+        {
+            builder.RegisterComponent(mainMenuView);
+            builder.Register<MainMenuPresenter>(Lifetime.Singleton).AsImplementedInterfaces();
+        }
     }
 }
