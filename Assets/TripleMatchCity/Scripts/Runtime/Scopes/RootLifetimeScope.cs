@@ -11,8 +11,6 @@ using VContainer.Unity;
 public class RootLifetimeScope : LifetimeScope
 {
     public event Action OnRestartApplication;
-    private static RootLifetimeScope _instance;
-    public static RootLifetimeScope Instance => _instance;
 
     [SerializeField] private LevelContainerSO levelContainer;
     [SerializeField] private LevelManagerConfigSO levelManagerConfig;
@@ -24,8 +22,10 @@ public class RootLifetimeScope : LifetimeScope
         // Persistent services. Live for the whole app session.
         builder.Register<EventBus>(Lifetime.Singleton).As<IEventBus>();
 
+        builder.Register<PlayerPrefsProvider>(Lifetime.Singleton).As<IDataProvider>();
+        
         builder.Register<DataManager>(Lifetime.Singleton).As<IDataManager>();
-
+        
         builder.Register<LevelManager>(Lifetime.Singleton)
             .WithParameter(levelContainer)
             .WithParameter(levelManagerConfig)
@@ -40,6 +40,7 @@ public class RootLifetimeScope : LifetimeScope
 
     #endregion
 
+    // TODO : remove
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.D))
@@ -49,30 +50,6 @@ public class RootLifetimeScope : LifetimeScope
     }
 
     #region Unity Lifecycle
-
-    private void OnEnable()
-    {
-        if (_instance != null)
-        {
-            Debug.LogWarning("Multiple instances of RootLifetimeScope detected. Destroying the new instance.");
-            Destroy(gameObject);
-            return;
-        }
-
-        _instance = this;
-    }
-
-    private void OnDisable()
-    {
-
-    }
-
-    protected override void OnDestroy()
-    {
-        base.OnDestroy();
-        _instance = null;
-        Destroy(gameObject);
-    }
 
     public void RestartApplication()
     {

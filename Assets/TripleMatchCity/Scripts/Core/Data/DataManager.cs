@@ -11,15 +11,20 @@ namespace TripleMatch.Core.Data
     {
         private const string SaveKey = "tmc_game_save";
 
-        private IDataProvider _provider;
+        private readonly IDataProvider _provider;
         private bool _isDirty;
 
         public GameSaveData SaveData { get; private set; } = new GameSaveData();
         public bool IsLoaded { get; private set; }
 
-        public void Initialize(IDataProvider provider)
+        DataManager(IDataProvider provider)
         {
             _provider = provider;
+        }
+
+        public bool IsInitialized()
+        {
+            return _provider != null;
         }
 
         public void Load()
