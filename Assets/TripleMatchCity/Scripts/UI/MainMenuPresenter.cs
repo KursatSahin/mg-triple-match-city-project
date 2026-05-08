@@ -16,7 +16,7 @@ namespace TripleMatch.UI
     /// </summary>
     public class MainMenuPresenter : IStartable, IDisposable
     {
-        private const string TitleString = "Clone City";
+        private const string TitleString = "Demo City";
         private const string NextLevelFormat = "{0}";
 
         private readonly MainMenuView _view;
