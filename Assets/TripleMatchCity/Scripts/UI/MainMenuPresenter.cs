@@ -36,28 +36,33 @@ namespace TripleMatch.UI
 
             SetTitle();
             RefreshNextLevel();
-
-            Button play = _view.PlayButton;
-            if (play != null) play.onClick.AddListener(OnPlayClicked);
-
-            Button clear = _view.ClearButton;
-            if (clear != null) clear.onClick.AddListener(OnClearClicked);
+            
+            BindButtons();
         }
 
+        private void BindButtons()
+        {
+            _view?.PlayButton?.onClick.AddListener(OnPlayClicked);
+            _view?.ClearButton?.onClick.AddListener(OnClearClicked);
+        }
+        
         public void Dispose()
         {
-            if (_view == null) return;
+            UnBindButtons();
+        }
 
-            Button play = _view.PlayButton;
-            if (play != null) play.onClick.RemoveListener(OnPlayClicked);
-
-            Button clear = _view.ClearButton;
-            if (clear != null) clear.onClick.RemoveListener(OnClearClicked);
+        public void UnBindButtons()
+        {
+            _view?.PlayButton?.onClick.RemoveListener(OnPlayClicked);
+            _view?.ClearButton?.onClick.RemoveListener(OnClearClicked);
         }
 
         private void SetTitle()
         {
-            if (_view.TitleText != null) _view.TitleText.text = TitleString;
+            if (_view.TitleText != null)
+            {
+                _view.TitleText.text = TitleString;
+            }
         }
 
         private void RefreshNextLevel()
