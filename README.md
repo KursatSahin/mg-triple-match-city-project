@@ -17,8 +17,8 @@ Unity 6000.0.62f1, URP 2D Renderer.
 
 ## Art Assets
 
-1. **Kenney UI Pack** — Open-source UI sprites (CC0) | [see more](<https://kenney.nl/assets/ui-pack>)
-2. **Craftpix Summer Downtown Pack** — Backgrounds and item sprites.  | [see more](<https://craftpix.net/freebies/free-simple-summer-top-down-vector-tileset>)
+1. **Kenney UI Pack** — Open-source UI sprites (CC0) | [see more](https://kenney.nl/assets/ui-pack)
+2. **Craftpix Summer Downtown Pack** — Backgrounds and item sprites. | [see more](https://craftpix.net/freebies/free-simple-summer-top-down-vector-tileset)
 
 ---
 
@@ -70,6 +70,8 @@ Rule: an item type cannot appear in both `CollectibleItems` and `NonCollectibleI
 
 ## Getting Started
 
+**Critical Note: If you don't have Git LFS installed, use the [no-lfs](https://github.com/KursatSahin/mg-triple-match-city-project/tree/no-lfs) branch to [download](https://github.com/KursatSahin/mg-triple-match-city-project/archive/refs/heads/no-lfs.zip) with Download ZIP button**
+
 ```bash
 git clone https://github.com/KursatSahin/mg-triple-match-city-project.git
 ```
@@ -84,4 +86,4 @@ Android build: IL2CPP, ARM64, min API 26
 
 ## APK
 
-Download: [Releases](<https://github.com/KursatSahin/mg-triple-match-city-project/releases>)
+Download: [Releases](https://github.com/KursatSahin/mg-triple-match-city-project/releases)
